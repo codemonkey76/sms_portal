@@ -13,5 +13,4 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 
 });
 
-Illuminate\Routing\Router::class
 Route::post('/status', [MessageStatusController::class, 'store']);
