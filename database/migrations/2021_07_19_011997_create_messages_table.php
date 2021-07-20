@@ -15,6 +15,8 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('body');
             $table->unsignedSmallInteger('numSegments')->default(0);
             $table->string('from')->nullable();

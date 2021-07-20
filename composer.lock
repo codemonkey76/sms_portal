@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f90082c2ebbf844037d6e7f3ed3045f8",
+    "content-hash": "309d7e64957e74486e10f2dad88bcb8c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -173,16 +173,16 @@
         },
         {
             "name": "codemonkey76/laravel-twilio",
-            "version": "v1.1.0",
+            "version": "v1.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codemonkey76/laravel-twilio.git",
-                "reference": "1a00c91a736e9aeec382fc76de1213eec030910e"
+                "reference": "39320897cc14f02f84512a64b47998e40856d686"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codemonkey76/laravel-twilio/zipball/1a00c91a736e9aeec382fc76de1213eec030910e",
-                "reference": "1a00c91a736e9aeec382fc76de1213eec030910e",
+                "url": "https://api.github.com/repos/codemonkey76/laravel-twilio/zipball/39320897cc14f02f84512a64b47998e40856d686",
+                "reference": "39320897cc14f02f84512a64b47998e40856d686",
                 "shasum": ""
             },
             "require": {
@@ -220,9 +220,9 @@
             "description": "Wrapper for twilio/sdk",
             "support": {
                 "issues": "https://github.com/codemonkey76/laravel-twilio/issues",
-                "source": "https://github.com/codemonkey76/laravel-twilio/tree/v1.1.0"
+                "source": "https://github.com/codemonkey76/laravel-twilio/tree/v1.1.9"
             },
-            "time": "2021-07-19T03:05:07+00:00"
+            "time": "2021-07-20T04:22:32+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -2340,6 +2340,58 @@
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
             "time": "2020-12-06T15:14:20+00:00"
+        },
+        {
+            "name": "phlib/sms-length",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phlib/sms-length.git",
+                "reference": "1837911884127e7028a3ef1d120d838d2545e075"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phlib/sms-length/zipball/1837911884127e7028a3ef1d120d838d2545e075",
+                "reference": "1837911884127e7028a3ef1d120d838d2545e075",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9",
+                "symplify/easy-coding-standard": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phlib\\SmsLength\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Minett",
+                    "role": "developer"
+                }
+            ],
+            "description": "SMS Length calculations, using GSM 03.38 and GSM 03.40",
+            "keywords": [
+                "gsm",
+                "length",
+                "message",
+                "size",
+                "sms"
+            ],
+            "support": {
+                "issues": "https://github.com/phlib/sms-length/issues",
+                "source": "https://github.com/phlib/sms-length/tree/2.0.0"
+            },
+            "time": "2021-07-18T07:11:45+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -7063,16 +7115,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.6",
+            "version": "9.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fb9b8333f14e3dce976a60ef6a7e05c7c7ed8bfb"
+                "reference": "d0dc8b6999c937616df4fb046792004b33fd31c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fb9b8333f14e3dce976a60ef6a7e05c7c7ed8bfb",
-                "reference": "fb9b8333f14e3dce976a60ef6a7e05c7c7ed8bfb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d0dc8b6999c937616df4fb046792004b33fd31c5",
+                "reference": "d0dc8b6999c937616df4fb046792004b33fd31c5",
                 "shasum": ""
             },
             "require": {
@@ -7150,7 +7202,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.6"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.7"
             },
             "funding": [
                 {
@@ -7162,7 +7214,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-23T05:14:38+00:00"
+            "time": "2021-07-19T06:14:47+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -8185,7 +8237,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
