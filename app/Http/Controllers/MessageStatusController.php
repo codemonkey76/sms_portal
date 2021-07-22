@@ -19,7 +19,8 @@ class MessageStatusController extends Controller
 
         $message->update([
             'status' => $request->MessageStatus,
-            'dateUpdated' => now()
+            'dateUpdated' => now(),
+            'dateSent' => ($request->MessageStatus==='sent')?now():null
         ]);
     }
 }
