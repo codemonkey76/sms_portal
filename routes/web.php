@@ -16,10 +16,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
    Route::resource('customers', CustomerController::class);
 });
 
-Route::middleware('twilio')->group(function() {
-    Route::post('/status', [MessageStatusController::class, 'store']);
-});
+//Route::middleware('twilio')->group(function() {
+//    Route::post('/status', [MessageStatusController::class, 'store']);
+//});
 
 
 Route::post('/sms/incoming', [IncomingMessageController::class, 'store']);
-
+Route::post('/sms/status', [MessageStatusController::class, 'store']);

@@ -16,13 +16,14 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->string('body');
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->longText('body');
             $table->unsignedSmallInteger('numSegments')->default(0);
             $table->string('from')->nullable();
             $table->string('to')->nullable();
             $table->string('status')->nullable();
             $table->string('sid')->nullable();
+            $table->boolean('isMMS')->default(false);
             $table->dateTime('dateUpdated')->nullable();
             $table->dateTime('dateSent')->nullable();
             $table->datetime('dateCreated')->nullable();

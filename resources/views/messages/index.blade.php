@@ -42,6 +42,10 @@
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Message
                                 </th>
                             </tr>
@@ -50,7 +54,7 @@
                             @foreach ($messages as $message)
                                 <tr class="odd:bg-white even:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ $message->user->name }}
+                                        {{ optional($message->user)->name ?? $message->from }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{  ucfirst($message->status) }}
@@ -62,7 +66,14 @@
                                         {{ $message->dateCreated->format('d-m-Y G:ia') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $message->excerpt }}
+                                        {{ $message->isMMS?'MMS':'SMS' }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        @if(!$message->isMMS)
+                                            {{ $message->excerpt }}
+                                        @else
+                                            <a href="{{ $message->body }}">View</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

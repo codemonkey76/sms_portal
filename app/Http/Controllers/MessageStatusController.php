@@ -11,16 +11,15 @@ class MessageStatusController extends Controller
 {
     public function store(Request $request)
     {
-        $message = Message::where('sid', $request->MessageSid)->first();
+        $message = Message::where('sid', $request->message_id)->first();
         if (is_null($message)) {
             info('Message was not found in the database');
             return;
         }
-
         $message->update([
-            'status' => $request->MessageStatus,
+            'status' => $request->status,
             'dateUpdated' => now(),
-            'dateSent' => ($request->MessageStatus==='sent')?now():null
+            'dateSent' => ($request->status==='Delivered')?now():null
         ]);
     }
 }
