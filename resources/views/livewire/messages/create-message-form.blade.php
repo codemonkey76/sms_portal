@@ -8,16 +8,11 @@
     </x-slot>
 
     <x-slot name="form">
-        <!-- Recipient -->
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="recipient" value="{{ __('Recipient') }}" />
                 <x-jet-input id="recipient" type="text" class="mt-1 block w-full" wire:model.defer="recipient" autocomplete="recipient" />
                 <x-jet-input-error for="recipient" class="mt-2" />
             </div>
-{{--            <div>Current message: <span>{{ $message }}</span></div>--}}
-{{--            <div>Characters: <span>{{ $this->messageSize . ' / ' . $this->messageUpperBreakpoint }}</span></div>--}}
-{{--        <div>Total Messages: <span>{{ $this->messageCount }}</span></div>--}}
-        <!-- Message -->
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="message" value="{{ __('Message') }}" />
                 <x-textarea id="message" class="mt-2 block w-full" wire:model="message" />

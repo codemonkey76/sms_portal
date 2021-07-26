@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Customer') }}
+            {{ __('Edit Customer') }}
         </h2>
     </x-slot>
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <livewire:customers.create-customer-form />
+            <livewire:customers.edit-customer-form :customer="$customer"/>
             <x-jet-section-border />
         </div>
     </div>

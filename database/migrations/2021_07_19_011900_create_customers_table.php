@@ -17,6 +17,8 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('senderId');
+            $table->boolean('isAdmin')->default(false);
+            $table->boolean('isActive')->default(true);
             $table->timestamps();
         });
     }

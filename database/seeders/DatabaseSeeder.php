@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
             'name'     => 'Shane Poppleton',
             'email'    => 'shane@alphasg.com.au',
             'password' => bcrypt('secret'),
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'isAdmin' => true,
+            'isActive' => true
         ]);
     }
 }

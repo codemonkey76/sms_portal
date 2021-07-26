@@ -4,22 +4,29 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\IncomingMessageController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessageStatusController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
    Route::view('/dashboard', 'dashboard')->name('dashboard');
-   Route::resource('messages', MessageController::class);
-   Route::resource('customers', CustomerController::class);
+
+   Route::view('/inactive', 'inactive')->name('inactive');
+
+   Route::group(['middleware' => 'active'], function() {
+
+       Route::resource('messages', MessageController::class);
+
+       Route::group(['middleware' => 'admin'], function () {
+           Route::resource('customers', CustomerController::class);
+           Route::resource('users', UserController::class);
+       });
+
+   });
 });
-
-//Route::middleware('twilio')->group(function() {
-//    Route::post('/status', [MessageStatusController::class, 'store']);
-//});
-
 
 Route::post('/sms/incoming', [IncomingMessageController::class, 'store']);
 Route::post('/sms/status', [MessageStatusController::class, 'store']);

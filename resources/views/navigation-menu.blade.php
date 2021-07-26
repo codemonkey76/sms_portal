@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                        <x-icons.logo class="h-9 w-auto text-brand-400" />
                     </a>
                 </div>
 
@@ -15,9 +15,14 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    @if(auth()->user()->isAdmin)
                     <x-jet-nav-link href="{{ route('customers.index') }}" :active="request()->routeIs('customers.*')">
                         {{ __('Customers') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
+                        {{ __('Users') }}
+                    </x-jet-nav-link>
+                    @endif
                     <x-jet-nav-link href="{{ route('messages.index') }}" :active="request()->routeIs('messages.*')">
                         {{ __('Messages') }}
                     </x-jet-nav-link>

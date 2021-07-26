@@ -15,6 +15,8 @@ class AddCustomerIdToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('customer_id')->nullable()->constrained();
+            $table->boolean('isAdmin')->default(false);
+            $table->boolean('isActive')->default(false);
         });
     }
 
