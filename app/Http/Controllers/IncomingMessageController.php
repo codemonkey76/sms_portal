@@ -30,8 +30,9 @@ class IncomingMessageController extends Controller
 
             $validated['is_mms'] = (bool)preg_match("(https://clicksend-api-downloads.s3[^'\"]*)", $validated['body']);
 
+            ;
             Message::create([
-                'customer_id' => Customer::first()->id,
+                'customer_id' => optional(Customer::where('senderId', $validated['to'])->first())->id ?? 1,
                 'user_id' => null,
                 'body' => $validated['body'],
                 'numSegments' => 0,
