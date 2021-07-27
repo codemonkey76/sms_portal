@@ -14,7 +14,7 @@ class MessageController extends Controller
     }
     public function index(): View
     {
-        $messages = auth()->user()->customer->messages()->paginate(15);
+        $messages = auth()->user()->customer->messages()->latest('dateCreated')->paginate(15);
 
         return view('messages.index', compact('messages'));
     }
