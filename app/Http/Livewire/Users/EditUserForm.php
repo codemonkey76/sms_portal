@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class EditUserForm extends Component
 {
-    public $customers;
     public User $user;
 
     protected function rules(): array
@@ -17,7 +16,6 @@ class EditUserForm extends Component
             'user.email' => 'required|email',
             'user.isAdmin' => 'required|boolean',
             'user.isActive' => 'required|boolean',
-            'user.customer_id' => 'required|exists:customers,id'
         ];
     }
     public function render()
@@ -25,9 +23,8 @@ class EditUserForm extends Component
         return view('livewire.users.edit-user-form');
     }
 
-    public function mount(User $user, $customers)
+    public function mount(User $user)
     {
-        $this->customers = $customers;
         $this->user = $user;
     }
     public function updatedUserName()

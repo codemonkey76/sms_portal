@@ -21,18 +21,6 @@
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <label for="country" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Customer
-            </label>
-            <div class="mt-1 sm:mt-0 sm:col-span-2">
-                <select id="customer_id" name="customer_id" autocomplete="customer_id" class="max-w-lg block focus:ring-indigo-200 focus:border-indigo-300 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md" wire:model.lazy="user.customer_id">
-                    @foreach ($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="col-span-6 sm:col-span-4">
             <fieldset>
                 <legend class="text-base font-medium text-gray-900">
                     By Email

@@ -6,7 +6,11 @@
     </x-slot>
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <livewire:users.edit-user-form :user="$user" :customers="$customers"/>
+            <livewire:users.edit-user-form :user="$user"/>
+            <x-jet-section-border />
+        </div>
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+            <livewire:users.assign-customer-form :user="$user" />
             <x-jet-section-border />
         </div>
     </div>

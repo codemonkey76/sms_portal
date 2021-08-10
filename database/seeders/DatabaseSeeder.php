@@ -20,7 +20,10 @@ class DatabaseSeeder extends Seeder
             'senderId' => 'AlphaIT'
         ]);
 
-        $customer->users()->create([
+
+        Customer::factory()->count(30)->create();
+
+        $user = User::create([
             'name'     => 'Shane Poppleton',
             'email'    => 'shane@alphasg.com.au',
             'password' => bcrypt('secret'),
@@ -28,5 +31,7 @@ class DatabaseSeeder extends Seeder
             'isAdmin' => true,
             'isActive' => true
         ]);
+
+        $user->customers()->attach([$customer->id]);
     }
 }

@@ -1,9 +1,9 @@
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-    sms_portal:
+    sms_app:
         build:
-            context: ./vendor/laravel/sail/runtimes/7.4
+            context: ./docker/7.4
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -14,14 +14,40 @@ services:
         volumes:
             - '.:/var/www/html'
         depends_on:
-            - mysql
-            - redis
-            - meilisearch
-            - selenium
-    mysql:
+            - sms_db
+            - sms_redis
+        networks:
+            - sms_network
+            - default
+    sms_worker:
+        build:
+            context: ./docker/7.4
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-7.4/app
+        command: /usr/bin/php /var/www/html/artisan horizon
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+        volumes:
+             - '.:/var/www/html'
+        depends_on:
+            - sms_app
+        networks:
+            - sms_network
+    sms_redis:
+        image: 'redis:alpine'
+        volumes:
+            - 'sms_redis:/data'
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            retries: 3
+            timeout: 5s
+        networks:
+            - sms_network
+    sms_db:
         image: 'mysql:8.0'
-        ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_DATABASE: '${DB_DATABASE}'
@@ -29,48 +55,21 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         volumes:
-            - 'sailmysql:/var/lib/mysql'
+            - 'sms_db:/var/lib/mysql'
         healthcheck:
           test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
           retries: 3
           timeout: 5s
-    redis:
-        image: 'redis:alpine'
-        ports:
-            - '${FORWARD_REDIS_PORT:-6379}:6379'
-        volumes:
-            - 'sailredis:/data'
-        healthcheck:
-          test: ["CMD", "redis-cli", "ping"]
-          retries: 3
-          timeout: 5s
-    meilisearch:
-        image: 'getmeili/meilisearch:latest'
-        ports:
-            - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
-        volumes:
-            - 'sailmeilisearch:/data.ms'
-        healthcheck:
-          test: ["CMD", "wget", "--no-verbose", "--spider",  "http://localhost:7700/health"]
-          retries: 3
-          timeout: 5s
-    mailhog:
-        image: 'mailhog/mailhog:latest'
-        ports:
-            - '${FORWARD_MAILHOG_PORT:-1025}:1025'
-            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
-    selenium:
-       image: 'selenium/standalone-chrome'
-       volumes:
-            - '/dev/shm:/dev/shm'
+        networks:
+            - sms_network
 networks:
+    sms_network:
+        driver: bridge
     default:
-        external:
-            name: nginx_proxy
+        name: nginx_proxy
+        external: true
 volumes:
-    sailmysql:
+    sms_db:
         driver: local
-    sailredis:
-        driver: local
-    sailmeilisearch:
+    sms_redis:
         driver: local
