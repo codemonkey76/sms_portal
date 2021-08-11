@@ -80,8 +80,26 @@ class User extends Authenticatable
         return $this->belongsTo(Customer::class, 'current_customer_id');
     }
 
-    public function isCurrentCustomer(Customer $customer): bool
+    public function isCurrentCustomer(?Customer $customer): bool
     {
         return $this->current_customer_id === $customer->id;
+    }
+    public function switchCustomer(Customer $customer): bool
+    {
+        if (! $this->belongsToCustomer($customer)) {
+            return false;
+        }
+
+        $this->forceFill([
+            'current_customer_id' => $customer->id,
+        ])->save();
+
+        $this->setRelation('currentCustomer', $customer);
+
+        return true;
+    }
+    public function belongsToCustomer($customer)
+    {
+        return $this->allCustomers->contains(fn($c) => $c->id === $customer->id);
     }
 }

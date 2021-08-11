@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CurrentCustomerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\IncomingMessageController;
 use App\Http\Controllers\MessageController;
@@ -26,6 +27,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
        });
 
    });
+
+   Route::patch('current-customer', [CurrentCustomerController::class, 'update'])->name('current-customer.update');
 });
 
 Route::post('/sms/incoming', [IncomingMessageController::class, 'store']);

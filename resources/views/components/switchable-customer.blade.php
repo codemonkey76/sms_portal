@@ -1,7 +1,7 @@
 @props(['customer', 'component' => 'jet-dropdown-link'])
 
 <form method="POST" action="{{ route('current-customer.update') }}">
-@method('PUT')
+@method('PATCH')
 @csrf
 
 <!-- Hidden Team ID -->
