@@ -70,8 +70,18 @@ class User extends Authenticatable
 //        return $this->belongsTo(Customer::class);
 //    }
 
-    public function customers(): BelongsToMany
+    public function allCustomers(): BelongsToMany
     {
         return $this->belongsToMany(Customer::class);
+    }
+
+    public function currentCustomer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'current_customer_id');
+    }
+
+    public function isCurrentCustomer(Customer $customer): bool
+    {
+        return $this->current_customer_id === $customer->id;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\ViewServiceProvider;
+
 return [
 
     /*
@@ -161,7 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        ViewServiceProvider::class,
         /*
          * Package Service Providers...
          */
