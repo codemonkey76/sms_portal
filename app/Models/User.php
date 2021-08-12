@@ -98,8 +98,12 @@ class User extends Authenticatable
 
         return true;
     }
-    public function belongsToCustomer($customer)
+    public function belongsToCustomer(Customer $customer)
     {
         return $this->allCustomers->contains(fn($c) => $c->id === $customer->id);
+    }
+    public function selectedCustomer(Customer $customer): bool
+    {
+        return $this->current_customer_id === $customer->id;
     }
 }

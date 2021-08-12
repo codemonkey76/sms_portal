@@ -33,3 +33,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 
 Route::post('/sms/incoming', [IncomingMessageController::class, 'store']);
 Route::post('/sms/status', [MessageStatusController::class, 'store']);
+
+
+

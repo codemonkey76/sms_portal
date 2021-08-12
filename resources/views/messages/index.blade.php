@@ -8,8 +8,8 @@
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                        <a href="{{route('messages.create')}}"
+                    <div x-data="{ isOpen: false }" class="align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <a @click="isOpen = true" href="{{route('messages.create')}}"
                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
                             <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                  fill="currentColor" aria-hidden="true">
@@ -55,7 +55,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($messages as $message)
+                            @forelse ($messages as $message)
                                 <tr class="odd:bg-white even:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {{ optional($message->user)->name ?? $message->from }}
@@ -77,13 +77,19 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         @if(!$message->isMMS)
-                                            {{ $message->excerpt }}
+                                            <a href="{{route('messages.show', $message->id)}}" class="hover:text-indigo-600">{{ $message->excerpt }}</a>
                                         @else
                                             <a href="{{ $message->body }}" class="text-indigo-600 hover:text-indigo-900">View</a>
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr class="odd:bg-white even:bg-gray-50">
+                                    <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 italic">
+                                        No messages
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div class="mt-2">
