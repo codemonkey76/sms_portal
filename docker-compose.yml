@@ -1,5 +1,5 @@
 # For more information: https://laravel.com/docs/sail
-version: '3'
+version: '3.5'
 services:
     sms_app:
         build:
@@ -45,6 +45,22 @@ services:
           timeout: 5s
         networks:
             - sms_network
+    sms_mysql:
+        image: 'mysql:8.0'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        volumes:
+            - 'sailmysql:/var/lib/mysql'
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            retries: 3
+            timeout: 5s
+        networks:
+            - sms_network
 networks:
     sms_network:
         driver: bridge
@@ -53,6 +69,8 @@ networks:
         external: true
 volumes:
     sms_db:
+        driver: local
+    sailmysql:
         driver: local
     sms_redis:
         driver: local

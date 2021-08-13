@@ -71,7 +71,7 @@ class CreateMessageForm extends Component
         $this->validate();
 
         $clickSend = ClickSend::make()
-            ->from(auth()->user()->customer->senderId)
+            ->from(auth()->user()->currentCustomer->senderId)
             ->to($this->recipient)
             ->message($this->message);
 

@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $user->load('customers');
+        $user->load('allCustomers');
         return view('users.edit', compact('user'));
     }
 }
