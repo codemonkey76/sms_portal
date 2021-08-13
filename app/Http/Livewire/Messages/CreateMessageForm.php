@@ -82,7 +82,7 @@ class CreateMessageForm extends Component
             $data = [
                 'body' => $sms->body,
                 'user_id' => auth()->id(),
-                'customer_id' => auth()->user()->customer_id,
+                'customer_id' => auth()->user()->current_customer_id,
                 'numSegments' => $sms->message_parts,
                 'from' => $sms->from,
                 'to' => $sms->to,
