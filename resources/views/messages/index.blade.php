@@ -103,7 +103,7 @@
                                 </tr>
                             @empty
                                 <tr class="odd:bg-white even:bg-gray-50">
-                                    <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 italic">
+                                    <td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 italic">
                                         No messages
                                     </td>
                                 </tr>

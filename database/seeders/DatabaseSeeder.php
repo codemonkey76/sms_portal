@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Message;
+use App\Models\Template;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $user->attachCustomer(Customer::first()->id);
 
         Message::factory()->count(10)->create(['customer_id' => Customer::first()->id]);
+        Customer::each(fn($c) => Template::factory()->count(5)->create(['customer_id' => $c->id]));
 
     }
 }

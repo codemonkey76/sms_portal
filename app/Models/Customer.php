@@ -29,5 +29,9 @@ class Customer extends Model
     {
         return $this->hasMany(Message::class);
     }
+    public function templates(): HasMany
+    {
+        return $this->hasMany(Template::class);
+    }
 
 }

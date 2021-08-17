@@ -6,6 +6,7 @@ use App\Http\Controllers\IncomingMessageController;
 use App\Http\Controllers\MessageArchiveController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessageStatusController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
        });
 
        Route::resource('archive', MessageArchiveController::class);
+
+       Route::resource('templates', TemplateController::class);
    });
 
    Route::patch('current-customer', [CurrentCustomerController::class, 'update'])->name('current-customer.update');

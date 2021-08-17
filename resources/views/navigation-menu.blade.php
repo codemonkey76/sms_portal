@@ -29,6 +29,9 @@
                     <x-jet-nav-link href="{{ route('archive.index') }}" :active="request()->routeIs('archive.*')">
                         {{ __('Archive') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('templates.index') }}" :active="request()->routeIs('templates.*')">
+                        {{ __('Templates') }}
+                    </x-jet-nav-link>
 
                 </div>
             </div>

@@ -14,6 +14,18 @@
                 <x-jet-input-error for="recipient" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
+                <x-jet-label for="template" value="{{ __('Template') }}" />
+                <div class="flex space-x-2">
+                    <select id="location" name="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        @foreach ($templates as $template)
+                            <option value="{{ $template->id }}">{{ $template->description }}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-button type="button" wire:click="applyTemplate" class="mt-1">Apply</x-jet-button>
+                </div>
+
+            </div>
+            <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="message" value="{{ __('Message') }}" />
                 <x-textarea id="message" class="mt-2 block w-full" wire:model="message" />
                 <div class="mt-1 flex justify-between w-full text-xs text-gray-700">
