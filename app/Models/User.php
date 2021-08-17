@@ -30,7 +30,8 @@ class User extends Authenticatable
         'email',
         'password',
         'isAdmin',
-        'isActive'
+        'isActive',
+        'current_customer_id'
     ];
 
     /**
@@ -105,5 +106,21 @@ class User extends Authenticatable
     public function selectedCustomer(Customer $customer): bool
     {
         return $this->current_customer_id === $customer->id;
+    }
+
+    public function attachCustomer($customer)
+    {
+        $this->allCustomers()->syncWithoutDetaching($customer);
+
+        if (is_null($this->current_customer_id)) {
+            $this->update(['current_customer_id' => $customer]);
+        }
+    }
+
+    public function detachCustomer($customer)
+    {
+        $this->allCustomers()->detach($customer);
+
+        $this->update(['current_customer_id' => optional($this->allCustomers()->first())->id]);
     }
 }

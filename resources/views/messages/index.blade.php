@@ -52,6 +52,10 @@
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Message
                                 </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ $archived ? 'UnArchive' : 'Archive' }}
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -81,6 +85,20 @@
                                         @else
                                             <a href="{{ $message->body }}" class="text-indigo-600 hover:text-indigo-900">View</a>
                                         @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
+
+                                            <form action="{{ route('messages.update', $message->id) }}" method="POST">
+                                                @method('PATCH')
+                                                @csrf
+                                                <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                @if($archived)
+                                                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M53.2 467a48 48 0 0047.9 45h245.8a48 48 0 0047.9-45L416 128H32zm70.11-175.8l89.38-94.26a15.41 15.41 0 0122.62 0l89.38 94.26c10.08 10.62 2.94 28.8-11.32 28.8H256v112a16 16 0 01-16 16h-32a16 16 0 01-16-16V320h-57.37c-14.26 0-21.4-18.18-11.32-28.8zM432 32H312l-9.4-18.7A24 24 0 00281.1 0H166.8a23.72 23.72 0 00-21.4 13.3L136 32H16A16 16 0 000 48v32a16 16 0 0016 16h416a16 16 0 0016-16V48a16 16 0 00-16-16z"/></svg>
+                                                @else
+                                                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V160H32v288zm160-212c0-6.6 5.4-12 12-12h104c6.6 0 12 5.4 12 12v8c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-8zM480 32H32C14.3 32 0 46.3 0 64v48c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16V64c0-17.7-14.3-32-32-32z"/></svg>
+                                                @endif
+                                                </button>
+                                            </form>
                                     </td>
                                 </tr>
                             @empty

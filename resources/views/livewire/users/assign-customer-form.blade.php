@@ -16,6 +16,7 @@
                 secondary="senderId"
                 name="customers"
                 wire:model="selectedCustomer"
+                :selected="$selectedCustomer"
             />
 
 
@@ -37,13 +38,9 @@
                 secondary="senderId"
                 name="assignedCustomers"
                 wire:model="selectedAssignCustomer"
+                :selected="$selectedAssignCustomer"
             />
-
-
         </div>
-        <div>Add Item Selected: {{ $selectedCustomer }}</div>
-        <div>Remove Item Selected: {{ $selectedAssignCustomer }}</div>
-
     </x-slot>
 
 </x-jet-form-section>

@@ -21,10 +21,13 @@ class MessageController extends Controller
 
 
         if (!is_null(auth()->user()->currentCustomer)) {
-            $messages = auth()->user()->currentCustomer->messages()->latest('dateCreated')->paginate(15);
+            $messages = auth()->user()->currentCustomer->messages()->where('is_archived', false)->latest('dateCreated')->paginate(15);
         }
 
-        return view('messages.index', compact('messages'));
+        return view('messages.index', [
+            'messages' => $messages,
+            'archived' => false
+        ]);
     }
 
     public function show(Message $message)
@@ -33,6 +36,20 @@ class MessageController extends Controller
             abort(403);
         }
 
-        return view('messages.show', compact('message'));
+        return view('messages.show', [
+            'message' => $message,
+            'archived' => false
+        ]);
+    }
+
+    public function update(Request $request, Message $message)
+    {
+        if ($message->is_archived) {
+            $message->unarchive();
+        }
+        else {
+            $message->archive();
+        }
+        return redirect()->back();
     }
 }

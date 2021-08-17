@@ -15,11 +15,19 @@ class AssignCustomerForm extends Component
     public string $selectedCustomer = '';
     public string $selectedAssignCustomer = '';
 
-
     public array $customers;
     public array $assignedCustomers;
 
-    protected $listeners = ['itemSelected' => 'itemSelected'];
+
+    public function updatedSelectedCustomer($value)
+    {
+        $this->add = ($value !== '');
+    }
+
+    public function updatedSelectedAssignCustomer($value)
+    {
+        $this->remove = ($value !== '');
+    }
 
     public function mount(User $user)
     {
@@ -28,25 +36,37 @@ class AssignCustomerForm extends Component
 
     public function render()
     {
+        //info('Running render() function');
         $this->customers = Customer::whereNotIn('id', $this->user->allCustomers()->pluck('customers.id'))
             ->orderBy('name')
             ->get()
             ->groupBy(fn($customer) => $customer->name[0])
             ->toArray();
+        //info('Customers:');
+        //info(json_encode($this->customers));
 
-        $this->assignedCustomers = $this->user->allCustomers->toArray();
-        return view('livewire.users.assign-customer-form', ['customers' => $this->customers,
-            'assignedCustomers' => $this->assignedCustomers]);
+
+
+        //$this->assignedCustomers = $this->user->allCustomers->toArray();
+
+        $this->assignedCustomers = $this->user->fresh()->allCustomers->toArray();
+        //info('Assigned Customers:');
+        //info(json_encode($this->assignedCustomers));
+        return view('livewire.users.assign-customer-form');
     }
 
     public function assignCustomer()
     {
-        $this->user->allCustomers()->syncWithoutDetaching($this->selectedCustomer);
+        $this->user->attachCustomer($this->selectedCustomer);
+        $this->selectedCustomer = '';
+        $this->add = false;
     }
 
     public function unassignCustomer()
     {
-        $this->user->allCustomers()->detach($this->selectedAssignCustomer);
+        $this->user->detachCustomer($this->selectedAssignCustomer);
+        $this->selectedAssignCustomer = '';
+        $this->remove = false;
     }
 
     public function itemSelected($event)
@@ -55,13 +75,13 @@ class AssignCustomerForm extends Component
         info('Button State: ' . ($buttonState ? 'true':'false'));
 
         if ($event['name'] === 'customers') {
-            $this->selectedCustomer = $buttonState ? $event['selected'] : '';
+            $this->selectedCustomer = data_get($event, 'selected', '');
             $this->add = $buttonState;
             return;
         }
 
         if ($event['name'] === 'assignedCustomers') {
-            $this->selectedAssignCustomer = $buttonState ? $event['selected'] : '';
+            $this->selectedAssignCustomer = data_get($event, 'selected', '');
             $this->remove = $buttonState;
         }
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -15,12 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $customer = Customer::create([
-            'name' => 'Alpha IT Centre',
-            'senderId' => 'AlphaIT'
-        ]);
-
-
         Customer::factory()->count(30)->create();
 
         $user = User::create([
@@ -32,6 +27,9 @@ class DatabaseSeeder extends Seeder
             'isActive' => true
         ]);
 
-        $user->customers()->attach([$customer->id]);
+        $user->attachCustomer(Customer::first()->id);
+
+        Message::factory()->count(10)->create(['customer_id' => Customer::first()->id]);
+
     }
 }
