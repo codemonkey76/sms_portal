@@ -17,7 +17,6 @@ use GuzzleHttp\Client;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Phlib\SmsLength\SmsLength;
-use SebastianBergmann\Template\Template;
 
 class CreateMessageForm extends Component
 {
