@@ -17,6 +17,7 @@ use GuzzleHttp\Client;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Phlib\SmsLength\SmsLength;
+use SebastianBergmann\Template\Template;
 
 class CreateMessageForm extends Component
 {
@@ -43,7 +44,11 @@ class CreateMessageForm extends Component
 
     public function applyTemplate()
     {
-        $this->message = Template::find($this->selectedTemplate)->content;
+        $content = optional(Template::find($this->selectedTemplate))->content;
+        if (is_null($content)) {
+            $content = '';
+        }
+        $this->message = $content;
     }
 
     public function updatedMessage()
