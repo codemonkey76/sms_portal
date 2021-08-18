@@ -36,7 +36,7 @@ class CreateMessageForm extends Component
     {
         $this->smsLength = new SmsLength($this->message);
         $templates = auth()->user()->currentCustomer->templates;
-        $this->selectedTemplate = $templates->first()->id;
+        $this->selectedTemplate = optional($templates->first())->id;
 
         return view('livewire.messages.create-message-form', compact('templates'));
     }
