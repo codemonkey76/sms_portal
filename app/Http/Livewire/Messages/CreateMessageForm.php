@@ -24,7 +24,7 @@ class CreateMessageForm extends Component
 
     public string $message = '';
     public string $recipient = '';
-    public string $selectedTemplate;
+    public ?string $selectedTemplate;
     private ?SmsLength $smsLength = null;
 
     protected $rules = [
