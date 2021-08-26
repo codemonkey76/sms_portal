@@ -34,4 +34,9 @@ class CreateTemplateForm extends Component
 
         return redirect()->route('templates.index');
     }
+
+    public function back()
+    {
+        return redirect()->route('templates.index');
+    }
 }
