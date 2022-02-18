@@ -43,19 +43,25 @@ class MessageStats extends Command
         $this->info("Message Statistics Report");
         $monthsAgo = $this->option('month');
         $customerId = $this->option('customer');
-        $start = now()->subMonths($monthsAgo)->startOfMonth();
-        $end = now()->subMonths($monthsAgo)->endOfMonth();
+        $customer = Customer::find($customerId);
 
-        $this->info("--------------------------------------------------------------------");
-        $this->info("Message report for: " . Customer::find($customerId)->name);
-        $this->info("--------------------------------------------------------------------");
-        $this->info("Messages between {$start} and {$end}");
+        if (!is_null($customer)) {
+            $start = now()->subMonths($monthsAgo)->startOfMonth();
+            $end = now()->subMonths($monthsAgo)->endOfMonth();
 
-        $query = Customer::find($customerId)->messages()->where('dateCreated', '>', $start)->where('dateCreated', '<', $end);
+            $this->info("--------------------------------------------------------------------");
+            $this->info("Message report for: ".Customer::find($customerId)->name);
+            $this->info("--------------------------------------------------------------------");
+            $this->info("Messages between {$start} and {$end}");
 
-        $this->info("Num messages: {$query->count()}");
-        $this->info("Num credits: {$query->sum('numSegments')}");
+            $query = Customer::find($customerId)->messages()->where('dateCreated', '>', $start)->where('dateCreated',
+                '<', $end);
 
+            $this->info("Num messages: {$query->count()}");
+            $this->info("Num credits: {$query->sum('numSegments')}");
+        } else {
+            $this->error("Customer not found!");
+        }
         return 0;
     }
 }

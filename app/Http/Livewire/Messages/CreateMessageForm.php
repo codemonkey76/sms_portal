@@ -106,12 +106,8 @@ class CreateMessageForm extends Component
                 'dateSent' => null,
                 'dateCreated' => now()
             ];
-            $url = new Url();
-            $url->setUrl('http://sms.staging.asgcom.net');
             $message = Message::create($data);
-
         }
-
 
         return redirect()->route('messages.index');
     }
