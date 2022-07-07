@@ -22,6 +22,7 @@ class CreateMessageForm extends Component
 {
     use WithPagination;
 
+    public $templates;
     public string $message = '';
     public string $recipient = '';
     public ?string $selectedTemplate;
@@ -29,16 +30,19 @@ class CreateMessageForm extends Component
 
     protected $rules = [
         'recipient' => 'required|regex:/\+?[0-9]{0,11}/',
-        'message' => 'required'
+        'message' => 'required',
+        'selectedTemplate' => ''
     ];
 
+    public function mount()
+    {
+        $this->templates = auth()->user()->currentCustomer->templates;
+        $this->selectedTemplate = optional($this->templates->first())->id ?? '';
+    }
     public function render()
     {
         $this->smsLength = new SmsLength($this->message);
-        $templates = auth()->user()->currentCustomer->templates;
-        $this->selectedTemplate = optional($templates->first())->id ?? '';
-
-        return view('livewire.messages.create-message-form', compact('templates'));
+        return view('livewire.messages.create-message-form');
     }
 
     public function applyTemplate()
