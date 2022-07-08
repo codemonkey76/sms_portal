@@ -8,10 +8,9 @@ use App\Models\Message;
 use App\Models\Template;
 use ClickSend\Api\SMSApi;
 use ClickSend\Configuration;
-use ClickSend\Model\SmsMessage;
 use ClickSend\Model\SmsMessageCollection;
 use ClickSend\Model\Url;
-use Codemonkey76\ClickSend\ClickSend;
+use Codemonkey76\ClickSend\SmsMessage;
 use Codemonkey76\Twilio\TwilioService;
 use GuzzleHttp\Client;
 use Livewire\Component;
@@ -88,30 +87,50 @@ class CreateMessageForm extends Component
     {
         $this->validate();
 
-        $clickSend = ClickSend::make()
-            ->from(auth()->user()->currentCustomer->senderId)
-            ->to($this->recipient)
-            ->message($this->message);
 
-        if ($clickSend->send()) {
-            $result = json_decode($clickSend->getLastResult());
-            $sms = $result->data->messages[0];
+        $m = new SmsMessage($this->recipient, auth()->user()->currentCustomer->senderId, $this->message);
+        $response = \ClickSend::sendMessage($m);
 
-            $data = [
-                'body' => $sms->body,
+        if ($response) {
+
+            Message::create([
+                'body' => $this->message,
                 'user_id' => auth()->id(),
                 'customer_id' => auth()->user()->current_customer_id,
-                'numSegments' => $sms->message_parts,
-                'from' => $sms->from,
-                'to' => $sms->to,
+                'numSegments' => $response->data->total_count,
+                'from' => $response->data->messages[0]->from,
+                'to' => $response->data->messages[0]->to,
                 'status' => 'queued',
-                'sid' => $sms->message_id,
                 'dateUpdated' => now(),
                 'dateSent' => null,
                 'dateCreated' => now()
-            ];
-            $message = Message::create($data);
+            ]);
         }
+
+//        $clickSend = ClickSend::make()
+//            ->from(auth()->user()->currentCustomer->senderId)
+//            ->to($this->recipient)
+//            ->message($this->message);
+//
+//        if ($clickSend->send()) {
+//            $result = json_decode($clickSend->getLastResult());
+//            $sms = $result->data->messages[0];
+//
+//            $data = [
+//                'body' => $sms->body,
+//                'user_id' => auth()->id(),
+//                'customer_id' => auth()->user()->current_customer_id,
+//                'numSegments' => $sms->message_parts,
+//                'from' => $sms->from,
+//                'to' => $sms->to,
+//                'status' => 'queued',
+//                'sid' => $sms->message_id,
+//                'dateUpdated' => now(),
+//                'dateSent' => null,
+//                'dateCreated' => now()
+//            ];
+//            $message = Message::create($data);
+//        }
 
         return redirect()->route('messages.index');
     }

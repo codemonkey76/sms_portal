@@ -25,8 +25,12 @@ class CheckMessageStatus implements ShouldQueue
 
     public function handle()
     {
-        info('Running Job to check the message status');
-        $result = ClickSend::make()->getReceipt($this->message->sid);
-        info(json_encode($result));
+//        $response = ClickSend::getMessageReceipt($this->message->sid);
+//
+//        $response['status_code'] === 201
+//
+//        info('Running Job to check the message status');
+//        $result = ClickSend::make()->getReceipt($this->message->sid);
+//        info(json_encode($result));
     }
 }
