@@ -91,6 +91,8 @@ class CreateMessageForm extends Component
         $m = new SmsMessage($this->recipient, auth()->user()->currentCustomer->senderId, $this->message);
         $response = \ClickSend::sendMessage($m);
 
+        info("Response from sending message:");
+        info(json_encode($response));
         if ($response) {
 
             Message::create([
@@ -100,6 +102,7 @@ class CreateMessageForm extends Component
                 'numSegments' => $response->data->total_count,
                 'from' => $response->data->messages[0]->from,
                 'to' => $response->data->messages[0]->to,
+                'sid' => $response->data->messages[0]->message_id,
                 'status' => 'queued',
                 'dateUpdated' => now(),
                 'dateSent' => null,
