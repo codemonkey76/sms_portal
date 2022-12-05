@@ -99,7 +99,7 @@ class CreateMessageForm extends Component
                 'body' => $this->message,
                 'user_id' => auth()->id(),
                 'customer_id' => auth()->user()->current_customer_id,
-                'numSegments' => $response->data->total_count,
+                'numSegments' => $response->data->messages[0]->message_parts,
                 'from' => $response->data->messages[0]->from,
                 'to' => $response->data->messages[0]->to,
                 'sid' => $response->data->messages[0]->message_id,
