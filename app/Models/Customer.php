@@ -29,6 +29,17 @@ class Customer extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    public function lists(): HasMany
+    {
+        return $this->hasMany(ContactList::class);
+    }
+
     public function templates(): HasMany
     {
         return $this->hasMany(Template::class);

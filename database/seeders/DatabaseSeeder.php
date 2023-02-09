@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Contact;
+use App\Models\ContactList;
 use App\Models\Customer;
 use App\Models\Message;
 use App\Models\Template;
@@ -30,8 +32,11 @@ class DatabaseSeeder extends Seeder
 
         $user->attachCustomer(Customer::first()->id);
 
-        Message::factory()->count(10)->create(['customer_id' => Customer::first()->id]);
-        Customer::each(fn($c) => Template::factory()->count(5)->create(['customer_id' => $c->id]));
-
+        Customer::each(function($c) {
+            Message::factory()->count(10)->create(['customer_id' => $c->id]);
+            Template::factory()->count(5)->create(['customer_id' => $c->id]);
+            ContactList::factory()->count(5)->create(['customer_id' => $c->id]);
+            ContactList::whereCustomerId($c->id)->each(fn($l) => Contact::factory()->count(10)->create(['customer_id' => $c->id, 'contact_list_id' => $l->id]));
+        });
     }
 }
