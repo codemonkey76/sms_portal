@@ -115,15 +115,14 @@ class CreateMessageForm extends Component
         info("Validated successfully.");
         if ($this->message_type === 'single') {
             info('Dispatching SendSingleMessage job');
-            SendSingleMessage::dispatch($this->recipient, auth()->user()->currentCustomer->senderId, $this->message);
+            SendSingleMessage::dispatch($this->recipient, auth()->user()->currentCustomer->senderId, $this->message, auth()->user()->current_customer_id);
         }
 
         if ($this->message_type === 'multiple') {
             info('Dispatching SendBulkMessage job');
-            SendBulkMessage::dispatch($this->contactList, auth()->user()->currentCustomer->senderId, $this->message);
+            SendBulkMessage::dispatch($this->contactList, auth()->user()->currentCustomer->senderId, $this->message, auth()->user()->current_customer_id);
         }
-
-
+        
 
         return redirect()->route('messages.index');
     }

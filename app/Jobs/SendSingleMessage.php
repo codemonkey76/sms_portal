@@ -20,7 +20,7 @@ class SendSingleMessage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public string $recipient, public string $senderId, public string $message) {}
+    public function __construct(public string $recipient, public string $senderId, public string $message, public string $customerId) {}
 
     /**
      * Execute the job.
@@ -37,7 +37,7 @@ class SendSingleMessage implements ShouldQueue
             Message::create([
                 'body' => $this->message,
                 'user_id' => auth()->id(),
-                'customer_id' => auth()->user()->current_customer_id,
+                'customer_id' => $this->customerId,
                 'numSegments' => $response->data->messages[0]->message_parts,
                 'from' => $response->data->messages[0]->from,
                 'to' => $response->data->messages[0]->to,
