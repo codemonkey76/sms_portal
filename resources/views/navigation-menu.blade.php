@@ -23,6 +23,7 @@
                         {{ __('Users') }}
                     </x-jet-nav-link>
 
+                    @endif
                         <x-jet-nav-link href="{{ route('contacts.index') }}" :active="request()->routeIs('contacts.*')">
                             {{ __('Contacts') }}
                         </x-jet-nav-link>
@@ -30,7 +31,6 @@
                         <x-jet-nav-link href="{{ route('lists.index') }}" :active="request()->routeIs('lists.*')">
                             {{ __('Lists') }}
                         </x-jet-nav-link>
-                    @endif
                     <x-jet-nav-link href="{{ route('messages.index') }}" :active="request()->routeIs('messages.*')">
                         {{ __('Messages') }}
                     </x-jet-nav-link>
