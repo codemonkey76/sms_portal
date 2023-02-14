@@ -122,7 +122,7 @@ class CreateMessageForm extends Component
             info('Dispatching SendBulkMessage job');
             SendBulkMessage::dispatch($this->contactList, auth()->user()->currentCustomer->senderId, $this->message, auth()->user()->current_customer_id);
         }
-        
+
 
         return redirect()->route('messages.index');
     }
