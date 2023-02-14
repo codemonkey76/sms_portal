@@ -69,6 +69,9 @@
             </div>
             <x-jet-input-error for="message" class="mt-2"/>
         </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-validation-errors />
+        </div>
     </x-slot>
 
     <x-slot name="actions">

@@ -38,7 +38,7 @@ class CreateMessageForm extends Component
         return [
             'message' => 'required',
             'message_type' => 'in:single,multiple',
-            'recipient' => 'required_if:message_type,multiple|regex:/\+?[0-9]{0,11}/',
+            'recipient' => 'required_if:message_type,single|regex:/\+?[0-9]{0,11}/',
             'contactList' => 'required_if:message_type,multiple|exists:contact_lists,id',
             'selectedTemplate' => ''
         ];
@@ -112,11 +112,18 @@ class CreateMessageForm extends Component
     {
         $this->validate();
 
-        if ($this->message_type === 'single')
+        info("Validated successfully.");
+        if ($this->message_type === 'single') {
+            info('Dispatching SendSingleMessage job');
             SendSingleMessage::dispatch($this->recipient, auth()->user()->currentCustomer->senderId, $this->message);
+        }
 
-        if ($this->message_type === 'multiple')
+        if ($this->message_type === 'multiple') {
+            info('Dispatching SendBulkMessage job');
             SendBulkMessage::dispatch($this->contactList, auth()->user()->currentCustomer->senderId, $this->message);
+        }
+
+
 
         return redirect()->route('messages.index');
     }
