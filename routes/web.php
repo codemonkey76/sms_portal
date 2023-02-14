@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CurrentCustomerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\IncomingMessageController;
+use App\Http\Controllers\ListController;
 use App\Http\Controllers\MessageArchiveController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessageStatusController;
@@ -29,6 +31,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
        });
 
        Route::resource('archive', MessageArchiveController::class);
+       Route::resource('contacts', ContactController::class);
+       Route::resource('lists', ListController::class);
 
        Route::resource('templates', TemplateController::class);
    });
