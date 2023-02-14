@@ -27,8 +27,8 @@ class ListController extends Controller
         return view('lists.create');
     }
 
-    public function edit(ContactList $contactList)
+    public function edit(ContactList $list)
     {
-        return view('lists.edit', compact('contactList'));
+        return view('lists.edit', compact('list'));
     }
 }
