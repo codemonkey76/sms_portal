@@ -36,9 +36,9 @@ class CreateMessageForm extends Component
     protected function rules()
     {
         return [
-            'recipient' => 'required|regex:/\+?[0-9]{0,11}/',
             'message' => 'required',
             'message_type' => 'in:single,multiple',
+            'recipient' => 'required_if:message_type,multiple|regex:/\+?[0-9]{0,11}/',
             'contactList' => 'required_if:message_type,multiple|exists:contact_lists,id',
             'selectedTemplate' => ''
         ];
