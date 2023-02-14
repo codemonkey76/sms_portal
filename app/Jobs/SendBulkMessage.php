@@ -40,7 +40,7 @@ class SendBulkMessage implements ShouldQueue
         return Str::of($message)
             ->replace('<<first_name>>', $contact->first_name)
             ->replace('<<last_name>>', $contact->last_name)
-            ->replace('<<company>>', $contact->company_name)
+            ->replace('<<company_name>>', $contact->company_name)
             ->replace('<<number>>', $contact->number);
     }
 }
