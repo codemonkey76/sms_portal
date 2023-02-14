@@ -13,16 +13,7 @@ class ContactController extends Controller
 {
     public function index(): View
     {
-        $contacts = new LengthAwarePaginator([], 0, 15);
-
-
-        if (!is_null(auth()->user()->currentCustomer)) {
-            $contacts = auth()->user()->currentCustomer->contacts()->latest()->paginate(15);
-        }
-
-        return view('contacts.index', [
-            'contacts' => $contacts
-        ]);
+        return view('contacts.index');
     }
 
     public function create()

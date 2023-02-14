@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Messages;
 
 use App\Events\MessageSent;
 use App\Jobs\CheckMessageStatus;
+use App\Jobs\SendBulkMessage;
+use App\Jobs\SendSingleMessage;
+use App\Models\ContactList;
 use App\Models\Message;
 use App\Models\Template;
 use ClickSend\Api\SMSApi;
@@ -22,19 +25,28 @@ class CreateMessageForm extends Component
     use WithPagination;
 
     public $templates;
+    public $lists;
     public string $message = '';
     public string $recipient = '';
+    public string $message_type = 'single';
+    public string $contactList = '';
     public ?string $selectedTemplate;
     private ?SmsLength $smsLength = null;
 
-    protected $rules = [
-        'recipient' => 'required|regex:/\+?[0-9]{0,11}/',
-        'message' => 'required',
-        'selectedTemplate' => ''
-    ];
+    protected function rules()
+    {
+        return [
+            'recipient' => 'required|regex:/\+?[0-9]{0,11}/',
+            'message' => 'required',
+            'message_type' => 'in:single,multiple',
+            'contactList' => 'required_if:message_type,multiple|exists:contact_lists,id',
+            'selectedTemplate' => ''
+        ];
+    }
 
     public function mount()
     {
+        $this->lists = auth()->user()->currentCustomer->lists;
         $this->templates = auth()->user()->currentCustomer->templates;
         $this->selectedTemplate = optional($this->templates->first())->id ?? '';
     }
@@ -42,6 +54,12 @@ class CreateMessageForm extends Component
     {
         $this->smsLength = new SmsLength($this->message);
         return view('livewire.messages.create-message-form');
+    }
+
+    public function updatedMessageType()
+    {
+        $this->contactList = '';
+        $this->recipient = '';
     }
 
     public function applyTemplate()
@@ -70,7 +88,14 @@ class CreateMessageForm extends Component
 
     public function getMessageCountProperty(): int
     {
-        return optional($this->smsLength)->getMessageCount() ?? 0;
+        $count = optional($this->smsLength)->getMessageCount() ?? 0;
+        return $count * $this->recipientCount;
+
+    }
+
+    public function getRecipientCountProperty(): int
+    {
+        return ($this->message_type === 'multiple' ? ContactList::find($this->contactList)?->contacts()?->count() : 1) ?? 1;
     }
 
     public function getMessageUpperBreakpointProperty(): int
@@ -87,53 +112,11 @@ class CreateMessageForm extends Component
     {
         $this->validate();
 
+        if ($this->message_type === 'single')
+            SendSingleMessage::dispatch($this->recipient, auth()->user()->currentCustomer->senderId, $this->message);
 
-        $m = new SmsMessage($this->recipient, auth()->user()->currentCustomer->senderId, $this->message);
-        $response = \ClickSend::sendMessage($m);
-
-        info("Response from sending message:");
-        info(json_encode($response));
-        if ($response) {
-
-            Message::create([
-                'body' => $this->message,
-                'user_id' => auth()->id(),
-                'customer_id' => auth()->user()->current_customer_id,
-                'numSegments' => $response->data->messages[0]->message_parts,
-                'from' => $response->data->messages[0]->from,
-                'to' => $response->data->messages[0]->to,
-                'sid' => $response->data->messages[0]->message_id,
-                'status' => 'queued',
-                'dateUpdated' => now(),
-                'dateSent' => null,
-                'dateCreated' => now()
-            ]);
-        }
-
-//        $clickSend = ClickSend::make()
-//            ->from(auth()->user()->currentCustomer->senderId)
-//            ->to($this->recipient)
-//            ->message($this->message);
-//
-//        if ($clickSend->send()) {
-//            $result = json_decode($clickSend->getLastResult());
-//            $sms = $result->data->messages[0];
-//
-//            $data = [
-//                'body' => $sms->body,
-//                'user_id' => auth()->id(),
-//                'customer_id' => auth()->user()->current_customer_id,
-//                'numSegments' => $sms->message_parts,
-//                'from' => $sms->from,
-//                'to' => $sms->to,
-//                'status' => 'queued',
-//                'sid' => $sms->message_id,
-//                'dateUpdated' => now(),
-//                'dateSent' => null,
-//                'dateCreated' => now()
-//            ];
-//            $message = Message::create($data);
-//        }
+        if ($this->message_type === 'multiple')
+            SendBulkMessage::dispatch($this->contactList, auth()->user()->currentCustomer->senderId, $this->message);
 
         return redirect()->route('messages.index');
     }

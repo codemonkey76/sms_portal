@@ -31,6 +31,11 @@ class CreateContactForm extends Component
         return redirect()->route('contacts.index');
     }
 
+    public function back()
+    {
+        return redirect()->route('contacts.index');
+    }
+
     public function mount()
     {
         $this->lists = auth()->user()->currentCustomer->lists;
