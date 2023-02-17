@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             Message::factory()->count(10)->create(['customer_id' => $c->id]);
             Template::factory()->count(5)->create(['customer_id' => $c->id]);
             ContactList::factory()->count(5)->create(['customer_id' => $c->id]);
-            ContactList::whereCustomerId($c->id)->each(fn($l) => Contact::factory()->count(10)->create(['customer_id' => $c->id, 'contact_list_id' => $l->id]));
+            //ContactList::whereCustomerId($c->id)->each(fn($l) => Contact::factory()->count(10)->create(['customer_id' => $c->id, 'contact_list_id' => $l->id]));
         });
     }
 }
