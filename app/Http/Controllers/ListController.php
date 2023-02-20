@@ -31,4 +31,12 @@ class ListController extends Controller
     {
         return view('lists.edit', compact('list'));
     }
+
+    public function destroy(ContactList $list)
+    {
+        $list->contacts()->delete();
+        $list->delete();
+
+        return redirect()->route('lists.index');
+    }
 }
