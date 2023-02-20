@@ -39,7 +39,7 @@ class ImportContacts extends Component
 
     public function mount()
     {
-        $this->lists = ContactList::all();
+        $this->lists = ContactList::query()->where('customer_id', auth()->user()->current_customer_id)->get();
     }
 
     public function updatingUpload($value)
