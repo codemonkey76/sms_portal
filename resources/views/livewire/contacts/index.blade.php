@@ -5,8 +5,10 @@
                 <div class="space-y-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 
                     <div class="flex justify-between items-center py-1">
-                    <a href="{{route('contacts.create')}}"
-                       class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+
+                    @if($this->hasLists)
+                            <a href="{{route('contacts.create')}}"
+                        class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
                         <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                              fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
@@ -15,7 +17,11 @@
                         </svg>
                         <span>New Contact</span>
                     </a>
-                        <livewire:import-contacts />
+                    <livewire:import-contacts />
+                        @else
+                        <span class="text-sm italic">You must create a contact list before creating any contacts.</span>
+                        @endif
+
                     </div>
                     <x-input.search wire:model="search"/>
 
@@ -73,13 +79,9 @@
                                         <a title="Edit" href="{{ route('contacts.edit', $contact->id) }}">
                                             <x-icons.pencil class="text-indigo-600 hover:text-indigo-900"/>
                                         </a>
-                                        <form method="POST" action="{{ route('contacts.destroy', $contact->id) }}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" title="Delete">
+                                            <button wire:click="delete({{ $contact->id }})" type="button" title="Delete">
                                                 <x-icons.trash class="text-indigo-600 hover:text-indigo-900"/>
                                             </button>
-                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -91,4 +93,16 @@
             </div>
         </div>
     </div>
+    <form wire:submit.prevent="confirmDelete">
+        <x-jet-confirmation-modal wire:model="showDeleteModal">
+            <x-slot name="title">Delete contact</x-slot>
+            <x-slot name="content">Are you sure you want to delete this contact?</x-slot>
+            <x-slot name="footer">
+                <div class="flex space-x-2">
+                    <x-button.secondary wire:click="cancelDelete">Cancel</x-button.secondary>
+                    <x-button.danger type="submit">Delete</x-button.danger>
+                </div>
+            </x-slot>
+        </x-jet-confirmation-modal>
+    </form>
 </div>

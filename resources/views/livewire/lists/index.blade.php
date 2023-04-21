@@ -41,10 +41,8 @@
                                         <a title="Edit" href="{{ route('lists.edit', $list->id) }}">
                                             <x-icons.pencil class="text-indigo-600 hover:text-indigo-900"/>
                                         </a>
-                                        <form method="POST" action="{{ route('lists.destroy', $list->id) }}">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" title="Delete">
+
+                                            <button wire:click="delete({{ $list->id }})" type="submit" title="Delete">
                                                 <x-icons.trash class="text-indigo-600 hover:text-indigo-900"/>
                                             </button>
                                         </form>
@@ -59,4 +57,16 @@
             </div>
         </div>
     </div>
+    <form wire:submit.prevent="confirmDelete">
+        <x-jet-confirmation-modal wire:model="showDeleteModal">
+            <x-slot name="title">Delete list</x-slot>
+            <x-slot name="content">Are you sure you want to delete this list?</x-slot>
+            <x-slot name="footer">
+                <div class="flex space-x-2">
+                    <x-button.secondary wire:click="cancelDelete">Cancel</x-button.secondary>
+                    <x-button.danger type="submit">Delete</x-button.danger>
+                </div>
+            </x-slot>
+        </x-jet-confirmation-modal>
+    </form>
 </div>

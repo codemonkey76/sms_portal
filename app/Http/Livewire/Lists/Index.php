@@ -10,6 +10,9 @@ class Index extends Component
 {
     use WithSearch;
 
+    public $deleting = null;
+    public $showDeleteModal = false;
+
     public function getRowsQueryProperty()
     {
         return ContactList::query()
@@ -24,5 +27,25 @@ class Index extends Component
     public function render()
     {
         return view('livewire.lists.index', ['lists' => $this->rows]);
+    }
+
+    public function delete(ContactList $list)
+    {
+        $this->deleting = $list;
+        $this->showDeleteModal = true;
+    }
+    public function cancelDelete()
+    {
+        $this->deleting = null;
+        $this->showDeleteModal = false;
+    }
+    public function confirmDelete()
+    {
+        if ($this->deleting)
+            $this->deleting->delete();
+
+        $this->showDeleteModal = false;
+
+        $this->notify('List deleted successfully!');
     }
 }

@@ -19,6 +19,11 @@ class EditTemplateForm extends Component
         $this->template = $template;
     }
 
+    public function back()
+    {
+        return redirect()->route('templates.index');
+    }
+
     public function render()
     {
         return view('livewire.templates.edit-template-form');

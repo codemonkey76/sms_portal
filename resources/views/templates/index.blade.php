@@ -52,7 +52,7 @@
                                         {{  ucfirst($template->description) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <a href="{{route('templates.show', $template->id)}}" class="hover:text-indigo-600">{{ $template->excerpt }}</a>
+                                            <a href="{{route('templates.edit', $template->id)}}" class="hover:text-indigo-600">{{ $template->excerpt }}</a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">
                                         <div class="flex space-x-2">

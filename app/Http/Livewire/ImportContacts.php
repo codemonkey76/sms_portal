@@ -26,15 +26,19 @@ class ImportContacts extends Component
     public $selectedList = '';
     public $lists;
 
-
-
     protected $rules = [
         'fieldColumnMap.number' => 'required',
+        'fieldColumnMap.first_name' => 'nullable|string|max:80',
+        'fieldColumnMap.last_name' => 'nullable|string|max:80',
+        'fieldColumnMap.company_name' => 'nullable|string|max:80',
         'selectedList' => 'required'
     ];
 
     protected $validationAttributes = [
-        'fieldColumnMap.number' => 'phone number'
+        'fieldColumnMap.number' => 'phone number',
+        'fieldColumnMap.first_name' => 'first name',
+        'fieldColumnMap.last_name' => 'last name',
+        'fieldColumnMap.company_name' => 'company'
     ];
 
     public function mount()
@@ -71,6 +75,8 @@ class ImportContacts extends Component
             });
 
         $this->reset();
+        $this->emit('refreshContacts');
+        $this->notify('Contacts imported successfully');
     }
 
     public function extractFieldsFromRow($row)
