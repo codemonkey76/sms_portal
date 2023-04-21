@@ -15,7 +15,7 @@
         </div>
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="content" value="{{ __('Content') }}" />
-            <x-textarea id="content" class="mt-2 block w-full" wire:model="template.content" />
+            <x-textarea id="content" class="mt-2 block w-full" wire:model.defer="template.content" />
             <div class="mt-1 flex justify-between w-full text-xs text-gray-700">
 
             </div>
