@@ -9,21 +9,21 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email Address') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" autocomplete="email" />
-            <x-jet-input-error for="email" class="mt-2" />
+            <x-jet-label for="email_api" value="{{ __('Email Address') }}" />
+            <x-jet-input id="email_api" type="email" class="mt-1 block w-full" wire:model.defer="state.email" autocomplete="email" />
+            <x-jet-input-error for="email_api" class="mt-2" />
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="current_password" value="{{ __('Current Password') }}" />
-            <x-jet-input id="current_password" type="password" class="mt-1 block w-full" wire:model.defer="state.current_password" autocomplete="current-password" />
-            <x-jet-input-error for="current_password" class="mt-2" />
+            <x-jet-label for="current_password_api" value="{{ __('Current Password') }}" />
+            <x-jet-input id="current_password_api" type="password" class="mt-1 block w-full" wire:model.defer="state.current_password" autocomplete="current-password" />
+            <x-jet-input-error for="current_password_api" class="mt-2" />
         </div>
 
 
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="device_name" value="{{ __('Device Identifier') }}" />
-            <x-jet-input id="device_name" type="password" class="mt-1 block w-full" wire:model.defer="state.device_name" autocomplete="new-password" />
+            <x-jet-input id="device_name" type="text" class="mt-1 block w-full" wire:model.defer="state.device_name" autocomplete="device_name" />
             <x-jet-input-error for="device_name" class="mt-2" />
         </div>
 
