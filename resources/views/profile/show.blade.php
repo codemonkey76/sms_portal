@@ -41,6 +41,15 @@
                 </div>
             @endif
 
+            @if (Auth::user()->isAdmin)
+                <x-jet-section-border />
+
+                <div class="mt-10 sm:mt-0">
+                    @livewire('profile.api-tokens-form')
+                </div>
+
+            @endif
+
                 <x-jet-section-border />
 
                 <div class="mt-10 sm:mt-0">
