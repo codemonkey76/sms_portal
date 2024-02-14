@@ -26,6 +26,10 @@
                             <tr>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    ID
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Company Name
                                 </th>
                                 <th scope="col"
@@ -41,7 +45,10 @@
                             <tbody>
 
                             @foreach($customers as $customer)
-                                <tr class="odd:bg-white even:bg-gray-50">
+                            <tr class="odd:bg-white even:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    {{$customer->id}}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     {{$customer->name}}
                                 </td>
