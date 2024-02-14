@@ -31,11 +31,13 @@ class MessageStatsController extends Controller
 
         $sum = $query->sum('numSegments');
         $count = $query->count();
+        $monthName = $start->format('F');
+        $year = $start->format('Y');
 
         return response()->json([
-            'message' => "Message stats for customer: {$customer->name}",
+            'message' => "Message stats for customer: {$customer->name} for {$monthName} {$year}",
             'data' => [
-                'sum' => $sum,
+                'sum' => intval($sum),
                 'count' => $count
             ]
         ]);
