@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
     mode: 'jit',
@@ -9,7 +9,6 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-
     theme: {
         extend: {
             fontFamily: {
@@ -26,17 +25,15 @@ module.exports = {
                     600: '#7B639A',
                     700: '#6E5192',
                     800: '#5E3B8A',
-                    900: '#3B205B'
-                }
-            }
+                    900: '#3B205B',
+                },
+            },
         },
     },
-
     variants: {
         extend: {
             opacity: ['disabled'],
         },
     },
-
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
-};
+}
