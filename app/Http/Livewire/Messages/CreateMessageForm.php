@@ -45,7 +45,7 @@ class CreateMessageForm extends Component
     {
         $this->lists = auth()->user()->currentCustomer->lists;
         $this->templates = auth()->user()->currentCustomer->templates;
-        $this->selectedTemplate = optional($this->templates->first())->id ?? '';
+        $this->selectedTemplate = $this->templates->first()?->id ?? '';
     }
 
     public function render()
@@ -77,17 +77,17 @@ class CreateMessageForm extends Component
 
     public function getMessageEncodingProperty(): string
     {
-        return optional($this->smsLength)->getEncoding() ?? '';
+        return $this->smsLength?->getEncoding() ?? '';
     }
 
     public function getMessageSizeProperty(): int
     {
-        return optional($this->smsLength)->getSize() ?? 0;
+        return $this->smsLength?->getSize() ?? 0;
     }
 
     public function getMessageCountProperty(): int
     {
-        $count = optional($this->smsLength)->getMessageCount() ?? 0;
+        $count = $this->smsLength?->getMessageCount() ?? 0;
 
         return $count * $this->recipientCount;
 
@@ -100,7 +100,7 @@ class CreateMessageForm extends Component
 
     public function getMessageUpperBreakpointProperty(): int
     {
-        return optional($this->smsLength)->getUpperBreakpoint() ?? 0;
+        return $this->smsLength?->getUpperBreakpoint() ?? 0;
     }
 
     public function back()

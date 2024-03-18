@@ -123,6 +123,6 @@ class User extends Authenticatable
     {
         $this->allCustomers()->detach($customer);
 
-        $this->update(['current_customer_id' => optional($this->allCustomers()->first())->id]);
+        $this->update(['current_customer_id' => $this->allCustomers()->first()?->id]);
     }
 }

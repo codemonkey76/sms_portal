@@ -62,7 +62,7 @@
                             @forelse ($messages as $message)
                                 <tr class="odd:bg-white even:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ optional($message->user)->name ?? $message->from }}
+                                        {{ $message->user?->name ?? $message->from }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {{ $message->to }}
