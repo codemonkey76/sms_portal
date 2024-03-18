@@ -21,11 +21,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::view('/inactive', 'inactive')->name('inactive');
 
-    Route::group(['middleware' => 'active'], function () {
+    Route::middleware('active')->group(function () {
 
         Route::resource('messages', MessageController::class);
 
-        Route::group(['middleware' => 'admin'], function () {
+        Route::middleware('admin')->group(function () {
             Route::resource('customers', CustomerController::class);
             Route::resource('users', UserController::class);
         });
