@@ -4,6 +4,7 @@
 /public/vendor/horizon
 mix-manifest.json
 /public/hot
+/public/build
 /public/storage
 /storage/*.key
 /vendor
