@@ -13,15 +13,18 @@ class Message extends Model
 
     public $timestamps = false;
 
-    protected $casts = [
-        'dateCreated' => 'datetime',
-        'dateUpdated' => 'datetime',
-        'is_archived' => 'boolean',
-    ];
-
     protected $appends = ['excerpt'];
 
     protected $guarded = [];
+
+    protected function casts(): array
+    {
+        return [
+            'dateCreated' => 'datetime',
+            'dateUpdated' => 'datetime',
+            'is_archived' => 'boolean',
+        ];
+    }
 
     public function customer(): BelongsTo
     {
