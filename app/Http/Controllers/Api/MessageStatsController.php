@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
-use Illuminate\Http\Request;
+use App\Http\Requests\MessageStatsRequest;
 use App\Http\Controllers\Controller;
 
 class MessageStatsController extends Controller
@@ -14,12 +16,9 @@ class MessageStatsController extends Controller
     }
 
 
-    public function __invoke(Request $request)
+    public function __invoke(MessageStatsRequest $request)
     {
-        $validated = $request->validate([
-            'customer' => 'required|exists:customers,id',
-            'monthsAgo' => 'required|integer|min:1|max:12'
-        ]);
+        $validated = $request->validated();
         $customerId = $validated['customer'];
         $monthsAgo = $validated['monthsAgo'];
 
@@ -42,6 +41,4 @@ class MessageStatsController extends Controller
             ]
         ]);
     }
-
 }
-
