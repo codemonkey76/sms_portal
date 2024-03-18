@@ -21,7 +21,7 @@ class CheckMessageStatus implements ShouldQueue
         $this->message = $message;
     }
 
-    public function handle()
+    public function handle(): void
     {
         //        $response = ClickSend::getMessageReceipt($this->message->sid);
         //

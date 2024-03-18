@@ -38,7 +38,7 @@ class MessageStats extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Message Statistics Report');
         $monthsAgo = $this->option('month');

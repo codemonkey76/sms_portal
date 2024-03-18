@@ -28,7 +28,7 @@ class SendSingleMessage implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $m = new SmsMessage($this->recipient, $this->senderId, $this->message);
         $response = \ClickSend::sendMessage($m);

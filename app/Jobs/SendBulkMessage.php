@@ -24,7 +24,7 @@ class SendBulkMessage implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $list = ContactList::find(intval($this->recipient_list));
 
