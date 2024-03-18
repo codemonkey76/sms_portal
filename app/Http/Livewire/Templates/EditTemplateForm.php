@@ -11,7 +11,7 @@ class EditTemplateForm extends Component
 
     protected $rules = [
         'template.description' => 'required',
-        'template.content' => 'required'
+        'template.content' => 'required',
     ];
 
     public function mount(Template $template)
@@ -28,11 +28,13 @@ class EditTemplateForm extends Component
     {
         return view('livewire.templates.edit-template-form');
     }
+
     public function updateTemplate()
     {
         $this->validate();
 
         $this->template->save();
+
         return redirect()->route('templates.index');
     }
 }

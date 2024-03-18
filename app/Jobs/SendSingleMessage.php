@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Message;
 use Codemonkey76\ClickSend\SmsMessage;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -20,7 +19,9 @@ class SendSingleMessage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public string $recipient, public string $senderId, public string $message, public string $customerId) {}
+    public function __construct(public string $recipient, public string $senderId, public string $message, public string $customerId)
+    {
+    }
 
     /**
      * Execute the job.
@@ -45,7 +46,7 @@ class SendSingleMessage implements ShouldQueue
                 'status' => 'queued',
                 'dateUpdated' => now(),
                 'dateSent' => null,
-                'dateCreated' => now()
+                'dateCreated' => now(),
             ]);
         }
     }

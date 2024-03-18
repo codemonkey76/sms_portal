@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Customer;
 use App\Models\User;
 
 class UserController extends Controller
@@ -18,6 +16,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user->load('allCustomers');
+
         return view('users.edit', compact('user'));
     }
 }

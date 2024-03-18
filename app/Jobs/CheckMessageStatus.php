@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Models\Message;
 use Codemonkey76\ClickSend\ClickSend;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -17,7 +16,6 @@ class CheckMessageStatus implements ShouldQueue
 
     protected Message $message;
 
-
     public function __construct(Message $message)
     {
         $this->message = $message;
@@ -25,12 +23,12 @@ class CheckMessageStatus implements ShouldQueue
 
     public function handle()
     {
-//        $response = ClickSend::getMessageReceipt($this->message->sid);
-//
-//        $response['status_code'] === 201
-//
-//        info('Running Job to check the message status');
-//        $result = ClickSend::make()->getReceipt($this->message->sid);
-//        info(json_encode($result));
+        //        $response = ClickSend::getMessageReceipt($this->message->sid);
+        //
+        //        $response['status_code'] === 201
+        //
+        //        info('Running Job to check the message status');
+        //        $result = ClickSend::make()->getReceipt($this->message->sid);
+        //        info(json_encode($result));
     }
 }

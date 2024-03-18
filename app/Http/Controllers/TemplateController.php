@@ -13,8 +13,7 @@ class TemplateController extends Controller
     {
         $templates = new LengthAwarePaginator([], 0, 15);
 
-
-        if (!is_null($request->user()->currentCustomer)) {
+        if (! is_null($request->user()->currentCustomer)) {
             $templates = $request->user()->currentCustomer->templates()->orderBy('description')->paginate(15);
         }
 
@@ -30,22 +29,25 @@ class TemplateController extends Controller
 
     public function edit(Request $request, Template $template)
     {
-        if (!$request->user()->selectedCustomer($template->customer)) {
+        if (! $request->user()->selectedCustomer($template->customer)) {
             abort(403);
         }
+
         return view('templates.edit', compact('template'));
     }
 
     public function update()
     {
     }
+
     public function destroy(Request $request, Template $template): RedirectResponse
     {
-        if (!$request->user()->selectedCustomer($template->customer)) {
+        if (! $request->user()->selectedCustomer($template->customer)) {
             abort(403);
         }
 
         $template->delete();
+
         return redirect()->back();
     }
 }

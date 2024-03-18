@@ -12,6 +12,7 @@ class ContactList extends Model
     use HasFactory, Searchable;
 
     public array $searchable = ['name'];
+
     protected $guarded = [];
 
     public function contacts(): HasMany

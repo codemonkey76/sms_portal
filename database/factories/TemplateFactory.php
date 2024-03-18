@@ -15,7 +15,7 @@ class TemplateFactory extends Factory
     {
         return [
             'description' => $this->faker->sentence(),
-            'content' => $this->faker->paragraph()
+            'content' => $this->faker->paragraph(),
         ];
     }
 }

@@ -40,18 +40,18 @@ class MessageStats extends Command
      */
     public function handle()
     {
-        $this->info("Message Statistics Report");
+        $this->info('Message Statistics Report');
         $monthsAgo = $this->option('month');
         $customerId = $this->option('customer');
         $customer = Customer::find($customerId);
 
-        if (!is_null($customer)) {
+        if (! is_null($customer)) {
             $start = now()->subMonths($monthsAgo)->startOfMonth();
             $end = now()->subMonths($monthsAgo)->endOfMonth();
 
-            $this->info("--------------------------------------------------------------------");
-            $this->info("Message report for: ".Customer::find($customerId)->name);
-            $this->info("--------------------------------------------------------------------");
+            $this->info('--------------------------------------------------------------------');
+            $this->info('Message report for: '.Customer::find($customerId)->name);
+            $this->info('--------------------------------------------------------------------');
             $this->info("Messages between {$start} and {$end}");
 
             $query = Customer::find($customerId)->messages()->where('dateCreated', '>', $start)->where('dateCreated',
@@ -60,8 +60,9 @@ class MessageStats extends Command
             $this->info("Num messages: {$query->count()}");
             $this->info("Num credits: {$query->sum('numSegments')}");
         } else {
-            $this->error("Customer not found!");
+            $this->error('Customer not found!');
         }
+
         return 0;
     }
 }

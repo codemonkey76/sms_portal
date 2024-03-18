@@ -14,7 +14,7 @@ class IncomingMessageController extends Controller
         try {
             $validated = $request->validated();
 
-            $validated['is_mms'] = (bool)preg_match("(https://clicksend-api-downloads.s3[^'\"]*)", $validated['body']);;
+            $validated['is_mms'] = (bool) preg_match("(https://clicksend-api-downloads.s3[^'\"]*)", $validated['body']);
             Message::create([
                 'customer_id' => optional(Customer::where('senderId', $validated['to'])->first())->id ?? 1,
                 'user_id' => null,
@@ -27,7 +27,7 @@ class IncomingMessageController extends Controller
                 'isMMS' => $validated['is_mms'],
                 'dateUpdated' => now(),
                 'dateSent' => now(),
-                'dateCreated' => now()
+                'dateCreated' => now(),
             ]);
         } catch (ValidationException $ex) {
             info(json_encode($ex->errors()));

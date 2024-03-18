@@ -9,7 +9,7 @@ trait WithPerPagePagination
     use WithPagination;
 
     public array $perPageOptions = [
-        10 => '10', 25 => '25', 50 => '50', 100 => '100'
+        10 => '10', 25 => '25', 50 => '50', 100 => '100',
     ];
 
     public int $perPage = 25;
@@ -18,8 +18,9 @@ trait WithPerPagePagination
 
     public function mountWithPerPagePagination()
     {
-        if (property_exists($this, 'perPageVariable'))
+        if (property_exists($this, 'perPageVariable')) {
             $this->sessionVariable = $this->perPageVariable;
+        }
 
         $this->perPage = intval(session()->get($this->sessionVariable, $this->perPage));
     }
@@ -39,5 +40,4 @@ trait WithPerPagePagination
     {
         return $query->paginate($this->perPage);
     }
-
 }

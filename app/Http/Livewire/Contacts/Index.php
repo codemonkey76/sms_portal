@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Contacts;
 
 use App\Http\Livewire\Traits\WithSearch;
 use App\Models\Contact;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 
 class Index extends Component
@@ -12,6 +11,7 @@ class Index extends Component
     use WithSearch;
 
     public $deleting = null;
+
     public $showDeleteModal = false;
 
     protected $listeners = ['refreshContacts' => '$refresh'];
@@ -43,19 +43,21 @@ class Index extends Component
         $this->deleting = $contact;
         $this->showDeleteModal = true;
     }
+
     public function cancelDelete()
     {
         $this->deleting = null;
         $this->showDeleteModal = false;
     }
+
     public function confirmDelete()
     {
-        if ($this->deleting)
+        if ($this->deleting) {
             $this->deleting->delete();
+        }
 
         $this->showDeleteModal = false;
 
         $this->notify('Contact deleted successfully!');
     }
-
 }

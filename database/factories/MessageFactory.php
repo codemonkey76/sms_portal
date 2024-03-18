@@ -2,9 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Customer;
-use App\Models\Message;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MessageFactory extends Factory
@@ -24,7 +21,7 @@ class MessageFactory extends Factory
             'status' => 'sent',
             'sid' => 'FAKE_SID',
             'dateUpdated' => now(),
-            'dateCreated' => now()
+            'dateCreated' => now(),
         ];
     }
 }

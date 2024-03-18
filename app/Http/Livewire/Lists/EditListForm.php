@@ -13,7 +13,7 @@ class EditListForm extends Component
     {
         return [
             'list.name' => 'required',
-            'list.customer_id' => 'required|exists:customers,id'
+            'list.customer_id' => 'required|exists:customers,id',
         ];
     }
 

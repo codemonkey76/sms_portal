@@ -12,13 +12,15 @@ class Customer extends Model
 {
     use HasFactory;
     use HasProfilePhoto;
+
     protected $fillable = ['name', 'senderId'];
+
     protected $appends = ['profilePhotoUrl'];
 
-//    public function users(): HasMany
-//    {
-//        return $this->hasMany(User::class);
-//    }
+    //    public function users(): HasMany
+    //    {
+    //        return $this->hasMany(User::class);
+    //    }
 
     public function users(): BelongsToMany
     {
@@ -44,5 +46,4 @@ class Customer extends Model
     {
         return $this->hasMany(Template::class);
     }
-
 }

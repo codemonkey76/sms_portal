@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,7 +30,7 @@ class User extends Authenticatable
         'password',
         'isAdmin',
         'isActive',
-        'current_customer_id'
+        'current_customer_id',
     ];
 
     /**
@@ -54,7 +53,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'isAdmin' => 'boolean',
-        'isActive' => 'boolean'
+        'isActive' => 'boolean',
     ];
 
     /**
@@ -66,10 +65,10 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-//    public function customer(): BelongsTo
-//    {
-//        return $this->belongsTo(Customer::class);
-//    }
+    //    public function customer(): BelongsTo
+    //    {
+    //        return $this->belongsTo(Customer::class);
+    //    }
 
     public function allCustomers(): BelongsToMany
     {
@@ -85,6 +84,7 @@ class User extends Authenticatable
     {
         return $this->current_customer_id === $customer->id;
     }
+
     public function switchCustomer(Customer $customer): bool
     {
         if (! $this->belongsToCustomer($customer)) {
@@ -99,10 +99,12 @@ class User extends Authenticatable
 
         return true;
     }
+
     public function belongsToCustomer(Customer $customer)
     {
-        return $this->allCustomers->contains(fn($c) => $c->id === $customer->id);
+        return $this->allCustomers->contains(fn ($c) => $c->id === $customer->id);
     }
+
     public function selectedCustomer(Customer $customer): bool
     {
         return $this->current_customer_id === $customer->id;

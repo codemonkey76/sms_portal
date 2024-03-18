@@ -26,8 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (App::environment('production'))
+        if (App::environment('production')) {
             URL::forceScheme('https');
+        }
 
         Component::macro('notify', function ($message) {
             $this->dispatchBrowserEvent('notify', $message);

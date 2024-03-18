@@ -15,7 +15,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
-            'senderId' => $this->faker->phoneNumber()
+            'senderId' => $this->faker->phoneNumber(),
         ];
     }
 }

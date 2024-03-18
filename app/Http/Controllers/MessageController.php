@@ -18,26 +18,25 @@ class MessageController extends Controller
     {
         $messages = new LengthAwarePaginator([], 0, 15);
 
-
-        if (!is_null($request->user()->currentCustomer)) {
+        if (! is_null($request->user()->currentCustomer)) {
             $messages = $request->user()->currentCustomer->messages()->where('is_archived', false)->latest('dateCreated')->paginate(15);
         }
 
         return view('messages.index', [
             'messages' => $messages,
-            'archived' => false
+            'archived' => false,
         ]);
     }
 
     public function show(Request $request, Message $message)
     {
-        if (!$request->user()->selectedCustomer($message->customer)) {
+        if (! $request->user()->selectedCustomer($message->customer)) {
             abort(403);
         }
 
         return view('messages.show', [
             'message' => $message,
-            'archived' => false
+            'archived' => false,
         ]);
     }
 
@@ -48,6 +47,7 @@ class MessageController extends Controller
         } else {
             $message->archive();
         }
+
         return redirect()->back();
     }
 }

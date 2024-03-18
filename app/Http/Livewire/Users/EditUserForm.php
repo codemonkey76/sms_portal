@@ -12,12 +12,13 @@ class EditUserForm extends Component
     protected function rules(): array
     {
         return [
-            'user.name'  => 'required|string|max:50',
+            'user.name' => 'required|string|max:50',
             'user.email' => 'required|email',
             'user.isAdmin' => 'required|boolean',
             'user.isActive' => 'required|boolean',
         ];
     }
+
     public function render()
     {
         return view('livewire.users.edit-user-form');
@@ -27,10 +28,12 @@ class EditUserForm extends Component
     {
         $this->user = $user;
     }
+
     public function updatedUserName()
     {
         $this->validateOnly('user.name');
     }
+
     public function updatedUserEmail()
     {
         $this->validateOnly('user.email');

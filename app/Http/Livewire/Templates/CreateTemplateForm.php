@@ -8,11 +8,12 @@ use Livewire\Component;
 class CreateTemplateForm extends Component
 {
     public string $description = '';
+
     public string $content = '';
 
     protected $rules = [
         'description' => 'required',
-        'content' => 'required'
+        'content' => 'required',
     ];
 
     public function render()
@@ -27,7 +28,7 @@ class CreateTemplateForm extends Component
         $data = [
             'description' => $this->description,
             'content' => $this->content,
-            'customer_id' => auth()->user()->currentCustomer->id
+            'customer_id' => auth()->user()->currentCustomer->id,
         ];
 
         Template::create($data);

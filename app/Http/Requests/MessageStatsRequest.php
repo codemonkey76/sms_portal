@@ -10,7 +10,7 @@ class MessageStatsRequest extends FormRequest
     {
         return [
             'customer' => 'required|exists:customers,id',
-            'monthsAgo' => 'required|integer|min:1|max:12'
+            'monthsAgo' => 'required|integer|min:1|max:12',
         ];
     }
 }

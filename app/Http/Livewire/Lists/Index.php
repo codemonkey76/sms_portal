@@ -11,6 +11,7 @@ class Index extends Component
     use WithSearch;
 
     public $deleting = null;
+
     public $showDeleteModal = false;
 
     public function getRowsQueryProperty()
@@ -24,6 +25,7 @@ class Index extends Component
     {
         return $this->applyPagination($this->rowsQuery);
     }
+
     public function render()
     {
         return view('livewire.lists.index', ['lists' => $this->rows]);
@@ -34,15 +36,18 @@ class Index extends Component
         $this->deleting = $list;
         $this->showDeleteModal = true;
     }
+
     public function cancelDelete()
     {
         $this->deleting = null;
         $this->showDeleteModal = false;
     }
+
     public function confirmDelete()
     {
-        if ($this->deleting)
+        if ($this->deleting) {
             $this->deleting->delete();
+        }
 
         $this->showDeleteModal = false;
 

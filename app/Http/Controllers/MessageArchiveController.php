@@ -14,6 +14,7 @@ class MessageArchiveController extends Controller
         if ($request->user()->isCurrentCustomer($message->customer)) {
             $message->archive();
         }
+
         return redirect()->back();
     }
 
@@ -22,6 +23,7 @@ class MessageArchiveController extends Controller
         if ($request->user()->isCurrentCustomer($message->customer)) {
             $message->unarchive();
         }
+
         return redirect()->back();
     }
 
@@ -29,14 +31,13 @@ class MessageArchiveController extends Controller
     {
         $messages = new LengthAwarePaginator([], 0, 15);
 
-
-        if (!is_null(auth()->user()->currentCustomer)) {
+        if (! is_null(auth()->user()->currentCustomer)) {
             $messages = $request->user()->currentCustomer->messages()->where('is_archived', true)->latest('dateCreated')->paginate(15);
         }
 
         return view('messages.index', [
             'messages' => $messages,
-            'archived' => true
+            'archived' => true,
         ]);
     }
 }

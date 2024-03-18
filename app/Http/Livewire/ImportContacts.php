@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-
 use App\Csv;
 use App\Models\Contact;
 use App\Models\ContactList;
@@ -15,15 +14,20 @@ class ImportContacts extends Component
     use WithFileUploads;
 
     public $showImportContacts = false;
+
     public $upload;
+
     public $columns;
+
     public $fieldColumnMap = [
         'first_name' => '',
         'last_name' => '',
         'company_name' => '',
-        'number' => ''
+        'number' => '',
     ];
+
     public $selectedList = '';
+
     public $lists;
 
     protected $rules = [
@@ -31,14 +35,14 @@ class ImportContacts extends Component
         'fieldColumnMap.first_name' => 'nullable|string|max:80',
         'fieldColumnMap.last_name' => 'nullable|string|max:80',
         'fieldColumnMap.company_name' => 'nullable|string|max:80',
-        'selectedList' => 'required'
+        'selectedList' => 'required',
     ];
 
     protected $validationAttributes = [
         'fieldColumnMap.number' => 'phone number',
         'fieldColumnMap.first_name' => 'first name',
         'fieldColumnMap.last_name' => 'last name',
-        'fieldColumnMap.company_name' => 'company'
+        'fieldColumnMap.company_name' => 'company',
     ];
 
     public function mount()
@@ -49,7 +53,7 @@ class ImportContacts extends Component
     public function updatingUpload($value)
     {
         Validator::make(['upload' => $value], [
-            'upload' => 'required|mimes:txt,csv'
+            'upload' => 'required|mimes:txt,csv',
         ])->validate();
     }
 
@@ -69,7 +73,7 @@ class ImportContacts extends Component
                     [
                         ...$this->extractFieldsFromRow($row),
                         'customer_id' => auth()->user()->current_customer_id,
-                        'contact_list_id' => $this->selectedList
+                        'contact_list_id' => $this->selectedList,
                     ]
                 );
             });
@@ -83,7 +87,7 @@ class ImportContacts extends Component
     {
         $attributes = collect($this->fieldColumnMap)
             ->filter()
-            ->mapWithKeys(function($heading, $field) use ($row) {
+            ->mapWithKeys(function ($heading, $field) use ($row) {
                 return [$field => $row[$heading]];
             })
             ->toArray();
@@ -97,13 +101,15 @@ class ImportContacts extends Component
             'first_name' => ['first_name', 'name'],
             'last_name' => ['last_name', 'surname', 'family_name'],
             'company_name' => ['company_name', 'company'],
-            'number' => ['number', 'phone', 'phone_number', 'mobile', 'mobile_number']
+            'number' => ['number', 'phone', 'phone_number', 'mobile', 'mobile_number'],
         ];
 
         foreach ($this->columns as $column) {
-            $match = collect($guesses)->search(fn($options) => in_array(strtolower($column), $options));
+            $match = collect($guesses)->search(fn ($options) => in_array(strtolower($column), $options));
 
-            if ($match) $this->fieldColumnMap[$match] = $column;
+            if ($match) {
+                $this->fieldColumnMap[$match] = $column;
+            }
         }
     }
 }

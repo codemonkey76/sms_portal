@@ -12,10 +12,11 @@ class Template extends Model
     use HasFactory;
 
     public $appends = ['excerpt'];
+
     protected $fillable = [
         'description',
         'content',
-        'customer_id'
+        'customer_id',
     ];
 
     public function getExcerptAttribute()

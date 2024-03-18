@@ -4,10 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Contact;
 use App\Models\ContactList;
-use App\Models\Message;
-use Codemonkey76\ClickSend\SmsMessage;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,7 +15,9 @@ class SendBulkMessage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public string $recipient_list, public string $senderId, public string $message, public string $customerId) {}
+    public function __construct(public string $recipient_list, public string $senderId, public string $message, public string $customerId)
+    {
+    }
 
     /**
      * Execute the job.
@@ -29,7 +28,7 @@ class SendBulkMessage implements ShouldQueue
     {
         $list = ContactList::find(intval($this->recipient_list));
 
-        $list->contacts()->each(function($contact) {
+        $list->contacts()->each(function ($contact) {
             $message = $this->replaceFields($this->message, $contact);
             SendSingleMessage::dispatch($contact->number, $this->senderId, $message, $this->customerId);
         });
