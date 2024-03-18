@@ -2,35 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IncomingMessageRequest;
 use App\Models\Customer;
 use App\Models\Message;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class IncomingMessageController extends Controller
 {
-    public function store(Request $request)
+    public function store(IncomingMessageRequest $request)
     {
         try {
-            $validated = $request->validate([
-                'originalsenderid' => 'required|string',
-                'body' => 'required|string',
-                'message' => 'required|string',
-                'sms' => 'required|string',
-                'custom_string' => 'present',
-                'to' => 'required|string',
-                'original_message_id' => 'present',
-                'originalmessageid' => 'present',
-                'user_id' => 'required|string',
-                'subaccount_id' => 'required|string',
-                'original_body' => 'present',
-                'timestamp' => 'required|numeric',
-                'message_id' => 'required|string'
-            ]);
+            $validated = $request->validated();
 
-            $validated['is_mms'] = (bool)preg_match("(https://clicksend-api-downloads.s3[^'\"]*)", $validated['body']);
-
-            ;
+            $validated['is_mms'] = (bool)preg_match("(https://clicksend-api-downloads.s3[^'\"]*)", $validated['body']);;
             Message::create([
                 'customer_id' => optional(Customer::where('senderId', $validated['to'])->first())->id ?? 1,
                 'user_id' => null,
@@ -45,7 +29,6 @@ class IncomingMessageController extends Controller
                 'dateSent' => now(),
                 'dateCreated' => now()
             ]);
-
         } catch (ValidationException $ex) {
             info(json_encode($ex->errors()));
         }
