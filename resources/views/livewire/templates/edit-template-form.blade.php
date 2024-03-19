@@ -9,17 +9,17 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="description" value="{{ __('Description') }}" />
-            <x-jet-input id="description" type="text" class="mt-1 block w-full" wire:model.defer="template.description" autocomplete="description" />
-            <x-jet-input-error for="template.description" class="mt-2" />
+            <x-label for="description" value="{{ __('Description') }}" />
+            <x-input id="description" type="text" class="mt-1 block w-full" wire:model.defer="template.description" autocomplete="description" />
+            <x-input-error for="template.description" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="content" value="{{ __('Content') }}" />
+            <x-label for="content" value="{{ __('Content') }}" />
             <x-textarea id="content" class="mt-2 block w-full" wire:model.defer="template.content" />
             <div class="mt-1 flex justify-between w-full text-xs text-gray-700">
 
             </div>
-            <x-jet-input-error for="template.content" class="mt-2" />
+            <x-input-error for="template.content" class="mt-2" />
         </div>
     </x-slot>
 

@@ -9,15 +9,15 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Name') }}" />
-            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.lazy="user.name" autocomplete="name" />
-            <x-jet-input-error for="user.name" class="mt-2" />
+            <x-label for="name" value="{{ __('Name') }}" />
+            <x-input id="name" type="text" class="mt-1 block w-full" wire:model.lazy="user.name" autocomplete="name" />
+            <x-input-error for="user.name" class="mt-2" />
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email Address') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.lazy="user.email" autocomplete="email" />
-            <x-jet-input-error for="user.email" class="mt-2" />
+            <x-label for="email" value="{{ __('Email Address') }}" />
+            <x-input id="email" type="email" class="mt-1 block w-full" wire:model.lazy="user.email" autocomplete="email" />
+            <x-input-error for="user.email" class="mt-2" />
         </div>
 
         <div class="col-span-6 sm:col-span-4">
