@@ -10,7 +10,7 @@
     "require": {
         "php": "^8.2",
         "codemonkey76/laravel-clicksend": "^1",
-        "guzzlehttp/guzzle": "7.4.1",
+        "guzzlehttp/guzzle": "^7.8",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.22",
         "laravel/jetstream": "^5.0",
