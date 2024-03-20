@@ -8,14 +8,12 @@ class CustomerFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->company(),
-            'senderId' => $this->faker->phoneNumber()
+            'senderId' => $this->faker->phoneNumber(),
         ];
     }
 }

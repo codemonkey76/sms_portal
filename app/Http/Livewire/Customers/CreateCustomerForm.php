@@ -7,18 +7,20 @@ use Livewire\Component;
 
 class CreateCustomerForm extends Component
 {
-
     public $name;
+
     public $senderId;
 
     protected $rules = [
         'name' => 'required|max:40|unique:customers,name',
-        'senderId' => 'required|max:20'
+        'senderId' => 'required|max:20',
     ];
+
     public function back()
     {
         return redirect()->route('customers.index');
     }
+
     public function render()
     {
         return view('livewire.customers.create-customer-form');
@@ -28,6 +30,7 @@ class CreateCustomerForm extends Component
     {
         $this->validateOnly('name');
     }
+
     public function updatedSenderId()
     {
         $this->validateOnly('senderId');
@@ -38,7 +41,7 @@ class CreateCustomerForm extends Component
         $this->validate();
         Customer::create([
             'name' => $this->name,
-            'senderId' => $this->senderId
+            'senderId' => $this->senderId,
         ]);
 
         return redirect()->route('customers.index');

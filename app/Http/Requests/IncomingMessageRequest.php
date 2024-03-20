@@ -21,7 +21,7 @@ class IncomingMessageRequest extends FormRequest
             'subaccount_id' => 'required|string',
             'original_body' => 'present',
             'timestamp' => 'required|numeric',
-            'message_id' => 'required|string'
+            'message_id' => 'required|string',
         ];
     }
 }

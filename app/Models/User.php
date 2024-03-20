@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,7 +30,7 @@ class User extends Authenticatable
         'password',
         'isAdmin',
         'isActive',
-        'current_customer_id'
+        'current_customer_id',
     ];
 
     /**
@@ -47,17 +46,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'isAdmin' => 'boolean',
-        'isActive' => 'boolean'
-    ];
-
-    /**
      * The accessors to append to the model's array form.
      *
      * @var array
@@ -66,10 +54,24 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-//    public function customer(): BelongsTo
-//    {
-//        return $this->belongsTo(Customer::class);
-//    }
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'isAdmin' => 'boolean',
+            'isActive' => 'boolean',
+        ];
+    }
+
+    //    public function customer(): BelongsTo
+    //    {
+    //        return $this->belongsTo(Customer::class);
+    //    }
 
     public function allCustomers(): BelongsToMany
     {
@@ -85,6 +87,7 @@ class User extends Authenticatable
     {
         return $this->current_customer_id === $customer->id;
     }
+
     public function switchCustomer(Customer $customer): bool
     {
         if (! $this->belongsToCustomer($customer)) {
@@ -99,10 +102,12 @@ class User extends Authenticatable
 
         return true;
     }
+
     public function belongsToCustomer(Customer $customer)
     {
-        return $this->allCustomers->contains(fn($c) => $c->id === $customer->id);
+        return $this->allCustomers->contains(fn ($c) => $c->id === $customer->id);
     }
+
     public function selectedCustomer(Customer $customer): bool
     {
         return $this->current_customer_id === $customer->id;
@@ -121,6 +126,6 @@ class User extends Authenticatable
     {
         $this->allCustomers()->detach($customer);
 
-        $this->update(['current_customer_id' => optional($this->allCustomers()->first())->id]);
+        $this->update(['current_customer_id' => $this->allCustomers()->first()?->id]);
     }
 }

@@ -14,25 +14,23 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         Customer::factory()->count(30)->create();
 
         $user = User::create([
-            'name'     => 'Shane Poppleton',
-            'email'    => 'shane@alphasg.com.au',
+            'name' => 'Shane Poppleton',
+            'email' => 'shane@alphasg.com.au',
             'password' => bcrypt('secret'),
             'email_verified_at' => now(),
             'isAdmin' => true,
-            'isActive' => true
+            'isActive' => true,
         ]);
 
         $user->attachCustomer(Customer::first()->id);
 
-        Customer::each(function($c) {
+        Customer::each(function ($c) {
             Message::factory()->count(10)->create(['customer_id' => $c->id]);
             Template::factory()->count(5)->create(['customer_id' => $c->id]);
             ContactList::factory()->count(5)->create(['customer_id' => $c->id]);

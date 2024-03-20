@@ -3,12 +3,12 @@
 namespace App\Http\Livewire\Contacts;
 
 use App\Models\Contact;
-use App\Models\Customer;
 use Livewire\Component;
 
 class CreateContactForm extends Component
 {
     public Contact $contact;
+
     public $lists;
 
     protected function rules(): array
@@ -19,7 +19,7 @@ class CreateContactForm extends Component
             'contact.last_name' => '',
             'contact.company_name' => '',
             'contact.contact_list_id' => '',
-            'contact.customer_id' => ''
+            'contact.customer_id' => '',
         ];
     }
 
@@ -42,9 +42,10 @@ class CreateContactForm extends Component
 
         $this->contact = Contact::make([
             'customer_id' => auth()->user()->current_customer_id,
-            'contact_list_id' => $this->lists->first()->id
+            'contact_list_id' => $this->lists->first()->id,
         ]);
     }
+
     public function render()
     {
         return view('livewire.contacts.create-contact-form');

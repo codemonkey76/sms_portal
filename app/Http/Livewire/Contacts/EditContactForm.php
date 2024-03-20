@@ -8,6 +8,7 @@ use Livewire\Component;
 class EditContactForm extends Component
 {
     public Contact $contact;
+
     public $lists;
 
     protected function rules(): array
@@ -17,7 +18,7 @@ class EditContactForm extends Component
             'contact.first_name' => '',
             'contact.last_name' => '',
             'contact.company_name' => '',
-            'contact.contact_list_id' => ''
+            'contact.contact_list_id' => '',
         ];
     }
 
@@ -41,6 +42,7 @@ class EditContactForm extends Component
         return redirect()->route('contacts.index');
 
     }
+
     public function render()
     {
         return view('livewire.contacts.edit-contact-form');

@@ -2,19 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Customer;
-use App\Models\Message;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MessageFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'body' => $this->faker->paragraph(),
@@ -24,7 +19,7 @@ class MessageFactory extends Factory
             'status' => 'sent',
             'sid' => 'FAKE_SID',
             'dateUpdated' => now(),
-            'dateCreated' => now()
+            'dateCreated' => now(),
         ];
     }
 }

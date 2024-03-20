@@ -8,14 +8,12 @@ class TemplateFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'description' => $this->faker->sentence(),
-            'content' => $this->faker->paragraph()
+            'content' => $this->faker->paragraph(),
         ];
     }
 }

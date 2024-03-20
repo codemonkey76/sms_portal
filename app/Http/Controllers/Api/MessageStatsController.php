@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Customer;
-use App\Http\Requests\MessageStatsRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MessageStatsRequest;
+use App\Models\Customer;
 
 class MessageStatsController extends Controller
 {
@@ -14,7 +14,6 @@ class MessageStatsController extends Controller
     {
         $this->middleware('admin');
     }
-
 
     public function __invoke(MessageStatsRequest $request)
     {
@@ -37,8 +36,8 @@ class MessageStatsController extends Controller
             'message' => "Message stats for customer: {$customer->name} for {$monthName} {$year}",
             'data' => [
                 'sum' => intval($sum),
-                'count' => $count
-            ]
+                'count' => $count,
+            ],
         ]);
     }
 }

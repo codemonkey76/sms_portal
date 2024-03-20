@@ -4,20 +4,23 @@ namespace App\Http\Livewire\Users;
 
 use App\Models\Customer;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class AssignCustomerForm extends Component
 {
     public User $user;
+
     public bool $add = false;
+
     public bool $remove = false;
+
     public string $selectedCustomer = '';
+
     public string $selectedAssignCustomer = '';
 
     public array $customers;
-    public array $assignedCustomers;
 
+    public array $assignedCustomers;
 
     public function updatedSelectedCustomer($value)
     {
@@ -40,16 +43,15 @@ class AssignCustomerForm extends Component
         $this->customers = Customer::whereNotIn('id', $this->user->allCustomers()->pluck('customers.id'))
             ->orderBy('name')
             ->get()
-            ->groupBy(fn($customer) => $customer->name[0])
+            ->groupBy(fn ($customer) => $customer->name[0])
             ->toArray();
         //info('Customers:');
         //info(json_encode($this->customers));
 
-
-
         //$this->assignedCustomers = $this->user->allCustomers->toArray();
 
         $this->assignedCustomers = $this->user->fresh()->allCustomers->toArray();
+
         //info('Assigned Customers:');
         //info(json_encode($this->assignedCustomers));
         return view('livewire.users.assign-customer-form');
@@ -72,11 +74,12 @@ class AssignCustomerForm extends Component
     public function itemSelected($event)
     {
         $buttonState = $event['selected'] !== '';
-        info('Button State: ' . ($buttonState ? 'true':'false'));
+        info('Button State: '.($buttonState ? 'true' : 'false'));
 
         if ($event['name'] === 'customers') {
             $this->selectedCustomer = data_get($event, 'selected', '');
             $this->add = $buttonState;
+
             return;
         }
 
