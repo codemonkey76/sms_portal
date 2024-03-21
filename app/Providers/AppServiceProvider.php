@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Component::macro('notify', function ($message) {
-            $this->dispatchBrowserEvent('notify', $message);
+            $this->dispatch('notify', $message);
         });
 
         $this->bootRoute();

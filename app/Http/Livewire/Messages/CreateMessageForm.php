@@ -90,7 +90,6 @@ class CreateMessageForm extends Component
         $count = $this->smsLength?->getMessageCount() ?? 0;
 
         return $count * $this->recipientCount;
-
     }
 
     public function getRecipientCountProperty(): int

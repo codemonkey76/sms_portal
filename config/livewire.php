@@ -154,5 +154,6 @@ return [
     */
 
     'render_on_redirect' => false,
+    'legacy_model_binding' => true
 
 ];

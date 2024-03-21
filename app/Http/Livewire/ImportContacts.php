@@ -79,7 +79,7 @@ class ImportContacts extends Component
             });
 
         $this->reset();
-        $this->emit('refreshContacts');
+        $this->dispatch('refreshContacts');
         $this->notify('Contacts imported successfully');
     }
 
