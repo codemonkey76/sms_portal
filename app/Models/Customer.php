@@ -15,7 +15,7 @@ class Customer extends Model
 
     protected $fillable = ['name', 'senderId'];
 
-    protected $appends = ['profilePhotoUrl'];
+    protected $appends = ['profile_photo_url'];
 
     //    public function users(): HasMany
     //    {
