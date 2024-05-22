@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="mx-auto py-10 sm:px-6 lg:px-8">
             <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div x-data="{ isOpen: false }" class="align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -65,7 +65,7 @@
                                         {{ $message->user?->name ?? $message->from }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {{ $message->to }}
+                                        {{ Str::limit($message->to, 12) }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{  ucfirst($message->status) }}
