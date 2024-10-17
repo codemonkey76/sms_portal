@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Message extends Model
 {
     use HasFactory;
+    use Prunable;
 
     public $timestamps = false;
 
@@ -24,6 +26,11 @@ class Message extends Model
             'dateUpdated' => 'datetime',
             'is_archived' => 'boolean',
         ];
+    }
+
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subYears(config('app.retention')));
     }
 
     public function customer(): BelongsTo
