@@ -55,6 +55,10 @@
 
         </div>
         <div class="col-span-6 sm:col-span-4">
+            <x-label for="tags" value="{{ __('Tags') }}" />
+            <x-tag-select id="tags" :tags="$tags" wire:model="selected_tags" />
+        </div>
+        <div class="col-span-6 sm:col-span-4">
             <x-label for="message" value="{{ __('Message') }}" />
             <x-textarea id="message" class="mt-2 block w-full" wire:model="message" />
             <div class="mt-1 flex justify-between w-full text-xs text-gray-700">

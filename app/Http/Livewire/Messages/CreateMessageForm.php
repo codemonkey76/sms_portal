@@ -19,6 +19,8 @@ class CreateMessageForm extends Component
     public $lists;
 
     public string $message = '';
+    public array $tags = [];
+    public array $selected_tags = [];
 
     public string $recipient = '';
 
@@ -33,6 +35,7 @@ class CreateMessageForm extends Component
     protected function rules()
     {
         return [
+            'selected_tags' => '',
             'message' => 'required',
             'message_type' => 'in:single,multiple',
             'recipient' => 'required_if:message_type,single|regex:/\+?[0-9]{0,11}/',
