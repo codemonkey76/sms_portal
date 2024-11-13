@@ -8,6 +8,7 @@ use App\Http\Controllers\ListController;
 use App\Http\Controllers\MessageArchiveController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MessageStatusController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +34,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::resource('archive', MessageArchiveController::class);
         Route::resource('contacts', ContactController::class);
         Route::resource('lists', ListController::class);
-
+        Route::resource('tags', TagController::class);
         Route::resource('templates', TemplateController::class);
     });
 

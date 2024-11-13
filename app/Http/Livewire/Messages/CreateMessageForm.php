@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Messages;
 use App\Jobs\SendBulkMessage;
 use App\Jobs\SendSingleMessage;
 use App\Models\ContactList;
+use App\Models\Tag;
 use App\Models\Template;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -46,8 +47,11 @@ class CreateMessageForm extends Component
 
     public function mount()
     {
-        $this->lists = auth()->user()->currentCustomer->lists;
-        $this->templates = auth()->user()->currentCustomer->templates;
+        $customer = auth()->user()->currentCustomer;
+
+        $this->tags = $customer->tags->pluck('name')->toArray();
+        $this->lists = $customer->lists;
+        $this->templates = $customer->templates;
         $this->selectedTemplate = $this->templates->first()?->id ?? '';
     }
 
@@ -113,16 +117,19 @@ class CreateMessageForm extends Component
     public function createMessage()
     {
         $this->validate();
+        $customer = auth()->user()->currentCustomer;
+
+        $tags = Tag::where('customer_id', $customer->id)->whereIn('name', $this->tags)->pluck('id')->toArray();
 
         info('Validated successfully.');
         if ($this->message_type === 'single') {
             info('Dispatching SendSingleMessage job');
-            SendSingleMessage::dispatch($this->recipient, auth()->user()->currentCustomer->senderId, $this->message, auth()->user()->current_customer_id);
+            SendSingleMessage::dispatch($this->recipient, $customer->senderId, $this->message, $tags, $customer->id);
         }
 
         if ($this->message_type === 'multiple') {
             info('Dispatching SendBulkMessage job');
-            SendBulkMessage::dispatch($this->contactList, auth()->user()->currentCustomer->senderId, $this->message, auth()->user()->current_customer_id);
+            SendBulkMessage::dispatch($this->contactList, $customer->senderId, $this->message, $tags, $customer->id);
         }
 
         return redirect()->route('messages.index');

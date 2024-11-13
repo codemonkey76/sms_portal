@@ -17,10 +17,10 @@ class Customer extends Model
 
     protected $appends = ['profile_photo_url'];
 
-    //    public function users(): HasMany
-    //    {
-    //        return $this->hasMany(User::class);
-    //    }
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class);
+    }
 
     public function users(): BelongsToMany
     {
