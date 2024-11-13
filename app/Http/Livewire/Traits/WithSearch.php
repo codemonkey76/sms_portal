@@ -10,6 +10,7 @@ trait WithSearch
 
     public function updatedSearch()
     {
+        \Log::info("Search updated to: $this->search");
         $this->resetPage();
     }
 }
