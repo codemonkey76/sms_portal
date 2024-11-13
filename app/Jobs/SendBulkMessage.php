@@ -15,7 +15,7 @@ class SendBulkMessage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct(public string $recipient_list, public string $senderId, public string $message, public string $customerId)
+    public function __construct(public string $recipient_list, public string $senderId, public string $message, public array $tags, public string $customerId)
     {
     }
 
@@ -28,7 +28,7 @@ class SendBulkMessage implements ShouldQueue
 
         $list->contacts()->each(function ($contact) {
             $message = $this->replaceFields($this->message, $contact);
-            SendSingleMessage::dispatch($contact->number, $this->senderId, $message, $this->customerId);
+            SendSingleMessage::dispatch($contact->number, $this->senderId, $message, $this->tags, $this->customerId);
         });
     }
 

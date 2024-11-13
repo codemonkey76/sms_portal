@@ -34,6 +34,9 @@
                     <x-jet-nav-link href="{{ route('messages.index') }}" :active="request()->routeIs('messages.*')">
                         {{ __('Messages') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('tags.index') }}" :active="request()->routeIs('tags.*')">
+                        {{ __('Tags') }}
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('archive.index') }}" :active="request()->routeIs('archive.*')">
                         {{ __('Archive') }}
                     </x-jet-nav-link>

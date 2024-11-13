@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Message;
+use App\Models\Tag;
 use Codemonkey76\ClickSend\SmsMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,7 +20,7 @@ class SendSingleMessage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public string $recipient, public string $senderId, public string $message, public string $customerId)
+    public function __construct(public string $recipient, public string $senderId, public string $message, public array $tags, public string $customerId)
     {
     }
 
@@ -33,7 +34,7 @@ class SendSingleMessage implements ShouldQueue
 
         if ($response) {
 
-            Message::create([
+            $m = Message::create([
                 'body' => $this->message,
                 'user_id' => auth()->id(),
                 'customer_id' => $this->customerId,
@@ -46,6 +47,8 @@ class SendSingleMessage implements ShouldQueue
                 'dateSent' => null,
                 'dateCreated' => now(),
             ]);
+
+            $m->tags()->attach($this->tags);
         }
     }
 }
