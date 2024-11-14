@@ -4,13 +4,11 @@ namespace App\Http\Livewire\Tags;
 
 use App\Http\Livewire\Traits\WithSearch;
 use App\Models\Tag;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Index extends Component
 {
     use WithSearch;
-
     public $deleting = null;
 
     public $showDeleteModal = false;
@@ -33,6 +31,7 @@ class Index extends Component
     {
         return view('livewire.tags.index', ['tags' => $this->rows]);
     }
+
     public function delete(Tag $tag)
     {
         $this->deleting = $tag;

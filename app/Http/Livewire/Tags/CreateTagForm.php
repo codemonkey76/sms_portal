@@ -4,11 +4,11 @@ namespace App\Http\Livewire\Tags;
 
 use App\Models\Contact;
 use App\Models\Tag;
+
 use Livewire\Component;
 
 class CreateTagForm extends Component
 {
-
     public Tag $tag;
 
     protected function rules(): array
