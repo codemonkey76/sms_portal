@@ -13,8 +13,8 @@ class Index extends Component
     {
         return Message::query()
             ->where('customer_id', auth()->user()->current_customer_id)
-            ->whereNot('archived')
-            ->orderBy('dateCreated')
+            ->whereIsArchived(false)
+            ->orderBy('dateCreated', 'DESC')
             ->search($this->search);
     }
 
@@ -27,8 +27,10 @@ class Index extends Component
         return view('livewire.messages.index', ['messages' => $this->rows]);
     }
 
-    public function archiveMessage(Message $message): void
+    public function archiveMessage(int $messageId): void
     {
+        $message = Message::findOrFail($messageId);
         $message->archive();
+        $this->notify('Message archived successfully!');
     }
 }
