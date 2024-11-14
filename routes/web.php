@@ -35,7 +35,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::resource('contacts', ContactController::class);
         Route::resource('lists', ListController::class);
         Route::resource('tags', TagController::class);
-
         Route::resource('templates', TemplateController::class);
     });
 

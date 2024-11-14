@@ -6,5 +6,4 @@
     </x-slot>
 
     <livewire:tags.index />
-
 </x-app-layout>
