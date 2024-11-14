@@ -24,6 +24,7 @@ class Index extends Component
     }
     public function render()
     {
+
         return view('livewire.messages.index', ['messages' => $this->rows]);
     }
 
