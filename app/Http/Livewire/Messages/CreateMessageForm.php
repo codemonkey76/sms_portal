@@ -119,7 +119,7 @@ class CreateMessageForm extends Component
         $this->validate();
         $customer = auth()->user()->currentCustomer;
 
-        $tags = Tag::where('customer_id', $customer->id)->whereIn('name', $this->tags)->pluck('id')->toArray();
+        $tags = Tag::where('customer_id', $customer->id)->whereIn('name', $this->selected_tags)->pluck('id')->toArray();
 
         info('Validated successfully.');
         if ($this->message_type === 'single') {
