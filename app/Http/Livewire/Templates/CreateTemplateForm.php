@@ -10,8 +10,11 @@ class CreateTemplateForm extends Component
     public string $description = '';
 
     public string $content = '';
+    public array $tags = [];
+    public array $selected_tags = [];
 
     protected $rules = [
+        'selected_tags' => 'array',
         'description' => 'required',
         'content' => 'required',
     ];
@@ -21,17 +24,26 @@ class CreateTemplateForm extends Component
         return view('livewire.templates.create-template-form');
     }
 
+    public function mount()
+    {
+        $customer = auth()->user()->currentCustomer;
+        $this->tags = $customer->tags->pluck('name')->toArray();
+    }
+
     public function createTemplate()
     {
         $this->validate();
+        $customer = auth()->user()->currentCustomer;
 
         $data = [
             'description' => $this->description,
             'content' => $this->content,
-            'customer_id' => auth()->user()->currentCustomer->id,
+            'customer_id' => $customer->id,
         ];
 
-        Template::create($data);
+        $template = Template::create($data);
+        $tags = $customer->tags()->whereIn('name', $this->selected_tags)->pluck('id')->toArray();
+        $template->tags()->sync($tags);
 
         return redirect()->route('templates.index');
     }
