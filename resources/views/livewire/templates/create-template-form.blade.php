@@ -21,6 +21,10 @@
             </div>
             <x-input-error for="content" class="mt-2" />
         </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="tags" value="{{ __('Tags') }}" />
+            <x-tag-select id="tags" :tags="$tags" wire:model="selected_tags" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">
