@@ -70,10 +70,12 @@ class CreateMessageForm extends Component
 
     public function applyTemplate()
     {
-        $content = optional(Template::find($this->selectedTemplate))->content;
+        $template = Template::find($this->selectedTemplate);
+        $content = optional($template)->content;
         if (is_null($content)) {
             $content = '';
         }
+        $this->selected_tags = $template->tags->pluck('name')->toArray();
         $this->message = $content;
     }
 
