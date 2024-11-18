@@ -36,6 +36,11 @@ class Tag extends Model
         return $this->belongsToMany(Message::class);
     }
 
+    public function templates(): BelongsToMany
+    {
+        return $this->belongsToMany(Template::class);
+    }
+
     public function getRetentionPolicyAttribute(): string
     {
         return "{$this->retention_duration} " . Str::plural($this->retention_unit->value, $this->retention_duration);

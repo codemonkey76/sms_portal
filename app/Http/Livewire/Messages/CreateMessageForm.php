@@ -70,10 +70,12 @@ class CreateMessageForm extends Component
 
     public function applyTemplate()
     {
-        $content = optional(Template::find($this->selectedTemplate))->content;
+        $template = Template::find($this->selectedTemplate);
+        $content = optional($template)->content;
         if (is_null($content)) {
             $content = '';
         }
+        $this->selected_tags = $template->tags->pluck('name')->toArray();
         $this->message = $content;
     }
 
@@ -119,7 +121,7 @@ class CreateMessageForm extends Component
         $this->validate();
         $customer = auth()->user()->currentCustomer;
 
-        $tags = Tag::where('customer_id', $customer->id)->whereIn('name', $this->tags)->pluck('id')->toArray();
+        $tags = Tag::where('customer_id', $customer->id)->whereIn('name', $this->selected_tags)->pluck('id')->toArray();
 
         info('Validated successfully.');
         if ($this->message_type === 'single') {
