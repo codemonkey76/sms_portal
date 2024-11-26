@@ -5,5 +5,5 @@
         </h2>
     </x-slot>
 
-    <livewire:messages.index />
+    <livewire:messages.index :archived="$archived"/>
 </x-app-layout>
