@@ -16,16 +16,7 @@ class MessageController extends Controller
 
     public function index(Request $request): View
     {
-        $messages = new LengthAwarePaginator([], 0, 15);
-
-        if (! is_null($request->user()->currentCustomer)) {
-            $messages = $request->user()->currentCustomer->messages()->where('is_archived', false)->latest('dateCreated')->paginate(15);
-        }
-
-        return view('messages.index', [
-            'messages' => $messages,
-            'archived' => false,
-        ]);
+        return view('messages.index', [ 'archived' => false ]);
     }
 
     public function show(Request $request, Message $message)

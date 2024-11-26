@@ -29,14 +29,8 @@ class MessageArchiveController extends Controller
 
     public function index(Request $request): View
     {
-        $messages = new LengthAwarePaginator([], 0, 15);
-
-        if (! is_null(auth()->user()->currentCustomer)) {
-            $messages = $request->user()->currentCustomer->messages()->where('is_archived', true)->latest('dateCreated')->paginate(15);
-        }
 
         return view('messages.index', [
-            'messages' => $messages,
             'archived' => true,
         ]);
     }

@@ -9,11 +9,15 @@ use Livewire\Component;
 class Index extends Component
 {
     use WithSearch;
+    public $archived;
+    public function mount($archived = false) {
+        $this->archived = $archived;
+    }
     public function getRowsQueryProperty()
     {
         return Message::query()
             ->where('customer_id', auth()->user()->current_customer_id)
-            ->whereIsArchived(false)
+            ->whereIsArchived($this->archived)
             ->orderBy('dateCreated', 'DESC')
             ->search($this->search);
     }
