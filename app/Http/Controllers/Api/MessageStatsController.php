@@ -54,6 +54,7 @@ class MessageStatsController extends Controller
     private function extractValidatedData(MessageStatsRequest $request): array
     {
         $validated = $request->validated();
+
         $customerId = $validated['customer'];
         $monthsAgo = $validated['monthsAgo'];
 
@@ -62,6 +63,6 @@ class MessageStatsController extends Controller
 
         $customer = Customer::find($customerId);
 
-        return compact('customer', 'start', 'end');
+        return [$customer, $start, $end];
     }
 }
