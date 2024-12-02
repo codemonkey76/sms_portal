@@ -46,7 +46,7 @@ class MessageStatsController extends Controller
         $customer->messages()
             ->where('dateCreated', '>', $start)
             ->where('dateCreated', '<', $end)
-            ->chunk(100, fn($message) => $message->each(fn($message) => $message->update(['imported' => true])));
+            ->update(['imported' => true]);
 
         return response()->json(['message' => 'Messages have been set to imported.'],200);
     }
