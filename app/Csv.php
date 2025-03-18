@@ -2,41 +2,48 @@
 
 namespace App;
 
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
+
 class Csv
 {
-    public $file;
+    protected string $path;
 
-    public function __construct($file)
+    public function __construct(UploadedFile|File|string $file, protected string $delimiter = ',')
     {
-        $this->file = $file;
+        if ($file instanceof UploadedFile || $file instanceOf File) {
+            $this->path = $file->getRealPath();
+        } elseif (file_exists($file)) {
+            $this->path = $file;
+        } else {
+            throw new \InvalidArgumentException('Invalid file or path provided to Csv.');
+        }
     }
 
-    public static function from($file)
+    public static function from(UploadedFile|File|string $file, string $delimiter = ','): self
     {
-        return new static($file);
+        return new static($file, $delimiter);
     }
 
-    public function columns()
+    public function columns(): array
     {
-        return $this->openFile(function ($handle) {
-            return array_filter(fgetcsv($handle, 1000, ','));
-        });
+        return $this->openFile(fn($handle) => array_filter(fgetcsv($handle, 1000, $this->delimiter)));
     }
 
-    public function eachRow($callback)
+    public function eachRow(callable $callback): self
     {
         $this->openFile(function ($handle) use ($callback) {
-            $columns = array_filter(fgetcsv($handle, 1000, ','));
+            $columns = array_filter(fgetcsv($handle, 1000, $this->delimiter));
 
-            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+            while (($data = fgetcsv($handle, 1000, $this->delimiter)) !== false) {
                 $row = [];
 
-                for ($i = 0; $i < count($data); $i++) {
+                foreach ($data as $i => $value) {
                     if (! isset($columns[$i])) {
                         continue;
                     }
 
-                    $row[$columns[$i]] = $data[$i];
+                    $row[$columns[$i]] = $value;
                 }
 
                 $callback($row);
@@ -48,10 +55,16 @@ class Csv
 
     protected function openFile($callback)
     {
-        $handle = fopen($this->file->getRealPath(), 'r');
+        $handle = fopen($this->path, 'r');
 
-        return $callback($handle);
+        if (!$handle) {
+            throw new \RuntimeException("Unable to open CSV file: {$this->path}");
+        }
+
+        $result = $callback($handle);
 
         fclose($handle);
+
+        return $result;
     }
 }

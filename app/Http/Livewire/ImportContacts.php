@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Csv;
+use App\Jobs\ImportContactsJob;
 use App\Models\Contact;
 use App\Models\ContactList;
 use Illuminate\Support\Facades\Validator;
@@ -14,9 +15,7 @@ class ImportContacts extends Component
     use WithFileUploads;
 
     public $showImportContacts = false;
-
     public $upload;
-
     public $columns;
 
     public $fieldColumnMap = [
@@ -27,7 +26,6 @@ class ImportContacts extends Component
     ];
 
     public $selectedList = '';
-
     public $lists;
 
     protected $rules = [
@@ -53,7 +51,7 @@ class ImportContacts extends Component
     public function updatingUpload($value)
     {
         Validator::make(['upload' => $value], [
-            'upload' => 'required|mimes:txt,csv',
+            'upload' => 'required|mimes:txt,csv|max:10240', // 10MB Max
         ])->validate();
     }
 
@@ -67,35 +65,19 @@ class ImportContacts extends Component
     {
         $this->validate();
 
-        Csv::from($this->upload)
-            ->eachRow(function ($row) {
-                Contact::create(
-                    [
-                        ...$this->extractFieldsFromRow($row),
-                        'customer_id' => auth()->user()->current_customer_id,
-                        'contact_list_id' => $this->selectedList,
-                    ]
-                );
-            });
+        // Store file temporarily
+        $path = $this->upload->store('imports');
+
+        ImportContactsJob::dispatch($path, $this->fieldColumnMap, $this->selectedList, auth()->user()->current_customer_id);
 
         $this->reset();
         $this->dispatch('refreshContacts');
-        $this->notify('Contacts imported successfully');
+        $this->notify('Import started! You will be notified when it finishes.');
     }
 
-    public function extractFieldsFromRow($row)
-    {
-        $attributes = collect($this->fieldColumnMap)
-            ->filter()
-            ->mapWithKeys(function ($heading, $field) use ($row) {
-                return [$field => $row[$heading]];
-            })
-            ->toArray();
 
-        return $attributes;
-    }
 
-    public function guessWhichColumnsMapToWhichFields()
+    public function guessWhichColumnsMapToWhichFields(): void
     {
         $guesses = [
             'first_name' => ['first_name', 'name'],
